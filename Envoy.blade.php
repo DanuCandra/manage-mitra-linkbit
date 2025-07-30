@@ -42,7 +42,7 @@
 
     echo "🚀 Running Seeder..."
     php ./artisan db:seed --class=UserSeeder --force || { echo "❌ Seeding failed"; exit 1; }
-    php ./artisan db:seed --class=RoleSeeder --force || { echo "❌ Role seeding failed"; exit 1; }
+    php ./artisan db:seed --class=RoleSeeder --force || { echo "❌ Role seediing failed"; exit 1; }
 @endtask
 
 @task('live', ['on' => 'production'])
