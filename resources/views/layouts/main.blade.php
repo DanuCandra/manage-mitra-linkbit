@@ -1,0 +1,8 @@
+@include('layouts.header')
+@include('layouts.welcome-preloader')
+@include('layouts.sidebar-vertikal')
+@include('layouts.topbar')
+@include('layouts.sidebar-horizontal')
+@include('layouts.content')
+@include('layouts.footer')
+@include('layouts.notif')
