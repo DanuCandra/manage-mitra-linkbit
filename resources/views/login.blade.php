@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Favicon icon-->
-    <link rel="shortcut icon" type="image/png" href="{{ url('') }}/assets/images/logos/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="{{ url('') }}/assets/images/logos/logo.png" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <!-- Core Css -->
     <link rel="stylesheet" href="{{ url('') }}/assets/css/styles.css" />
@@ -45,10 +45,10 @@
                             class="authentication-login min-vh-100 bg-body row justify-content-center align-items-center p-4">
                             <div class="auth-max-width col-sm-8 col-md-6 col-xl-7 px-4">
 
-                                <h2 class="mb-1 fs-7 fw-bolder">Welcome to Modernize</h2>
+                                <h2 class="mb-1 fs-7 fw-bolder">Selamat Datang Mitra Linkbit</h2>
                                 <img src="../assets/images/logos/logo-linkbit.png" class="light-logo"
                                     alt="Logo-light"width="150px" />
-                                <p class="mb-7">Your Admin Dashboard d</p>
+                                <p class="mb-7">Silahkan masuk untuk mencatat pelaporan</p>
                                 <h2 class="mb-1 fs-7 fw-bolder">
 
 
