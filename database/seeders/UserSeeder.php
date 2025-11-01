@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
 
             [
             'name' => 'Admin',
-            'nama_lengkap' => 'Administrator',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123'),
             'status' => 'aktif',
@@ -25,7 +24,6 @@ class UserSeeder extends Seeder
             ],
             [
             'name' => 'Mitra',
-            'nama_lengkap' => 'Mitra Linkbit',
             'email' => 'mitra@gmail.com',
             'password' => bcrypt('123'),
             'status' => 'aktif',
