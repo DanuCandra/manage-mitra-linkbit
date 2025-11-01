@@ -2,7 +2,7 @@
 
 @setup
     $repo = 'https://github.com/DanuCandra/manage-mitra-linkbit.git';
-    $appDir = '/var/www/mitra-linkbit';
+    $appDir = '/var/www/mitra';
     $branch = 'main';
 
     date_default_timezone_set('Asia/Jakarta');
