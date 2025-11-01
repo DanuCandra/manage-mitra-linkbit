@@ -1,4 +1,4 @@
-@servers(['production' => ['root@165.22.103.46']])
+@servers(['production' => ['root@128.199.106.124']])
 
 @setup
     $repo = 'https://github.com/DanuCandra/manage-mitra-linkbit.git';
@@ -40,9 +40,8 @@
     echo "🚀 Running Migrations..."
     php ./artisan migrate --force || { echo "❌ Migration failed"; exit 1; }
 
-    {{-- echo "🚀 Running Seeder..."
-    php ./artisan db:seed --class=RoleSeeder --force || { echo "❌ Role seediing failed"; exit 1; }
-    php ./artisan db:seed --class=UserSeeder --force || { echo "❌ Seeding failed"; exit 1; } --}}
+    echo "🚀 Running Seeder..."
+    php ./artisan db:seed --class=UserSeeder --force || { echo "❌ Seeding failed"; exit 1; }
 
 @endtask
 
