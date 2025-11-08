@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Tampilkan form login
-     */
+
     public function showLoginForm()
     {
         if (Auth::check() && !session()->has('error')) {
@@ -24,13 +22,13 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // 🔹 Validasi input
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        // 🔹 Coba login
+        
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); // mencegah session fixation
             session()->flash('success', 'Login berhasil!');
@@ -38,14 +36,11 @@ class AuthController extends Controller
             return $this->redirectToDashboard();
         }
 
-        // 🔹 Jika gagal
+
         return back()->with('error','Email atau Password Salah!');
     }
 
-    /**
-     * Redirect sesuai role user
-     */
-    protected function redirectToDashboard()
+       protected function redirectToDashboard()
     {
         $user = Auth::user();
 
@@ -74,9 +69,7 @@ class AuthController extends Controller
 
 
 
-    /**
-     * Logout user
-     */
+
     public function logout(Request $request)
     {
         Auth::logout();

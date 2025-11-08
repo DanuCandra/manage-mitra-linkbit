@@ -61,22 +61,85 @@
                                     <td>
                                         <div class="d-flex gap-2">
                                             <!-- Tombol Edit -->
-                                            <a href="{{ url('/manage-users/edit/' . $user->id) }}" class="btn btn-m btn-warning"
-                                                title="Edit">
+                                            <button type="button" class="btn mb-1 bg-warning-subtle text-warning px-4 fs-4"
+                                                data-bs-toggle="modal" data-bs-target="#edit_user_{{ $user->id }}">
                                                 <i class="ti ti-edit"></i>
-                                            </a>
+                                            </button>
 
-                                            <!-- Tombol Delete -->
-                                            <a href="{{ url('/user/delete/' . $user->id) }}" class="btn btn-m btn-danger"
-                                                title="Delete">
+                                            <!-- Tombol Hapus -->
+                                            <button type="button" class="btn mb-1 bg-danger-subtle text-danger px-4 fs-4"
+                                                data-bs-toggle="modal" data-bs-target="#hapus_user_{{ $user->id }}">
                                                 <i class="ti ti-trash"></i>
-                                            </a>
+                                            </button>
                                         </div>
                                     </td>
-
                                 </tr>
+
+                                <!-- Modal Edit -->
+                                <div id="edit_user_{{ $user->id }}" class="modal fade" tabindex="-1"
+                                    aria-labelledby="edit_user_label_{{ $user->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header modal-colored-header bg-warning text-white">
+                                                <h4 class="modal-title text-white"
+                                                    id="edit_user_label_{{ $user->id }}">
+                                                    Konfirmasi Edit User
+                                                </h4>
+                                                <button type="button" class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="mt-0">Apakah Anda yakin ingin mengedit data user ini?</h5>
+                                                <p>Nama User: <strong>{{ $user->name }}</strong><br>
+                                                Email: <strong>{{ $user->email }}</strong></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                                    Batal
+                                                </button>
+                                                <a href="{{ url('/manage-users/edit/' . $user->id) }}"
+                                                    class="btn bg-warning-subtle text-warning">
+                                                    Ya, Edit Sekarang
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal Hapus -->
+                                <div id="hapus_user_{{ $user->id }}" class="modal fade" tabindex="-1"
+                                    aria-labelledby="hapus_user_label_{{ $user->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header modal-colored-header bg-danger text-white">
+                                                <h4 class="modal-title text-white"
+                                                    id="hapus_user_label_{{ $user->id }}">
+                                                    Konfirmasi Hapus User
+                                                </h4>
+                                                <button type="button" class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="mt-0">Apakah Anda yakin ingin menghapus user ini?</h5>
+                                                <p>Nama: <strong>{{ $user->name }}</strong><br>
+                                                Email: <strong>{{ $user->email }}</strong></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                                    Batal
+                                                </button>
+                                                <a href="{{ url('/user/delete/' . $user->id) }}"
+                                                    class="btn bg-danger-subtle text-danger">
+                                                    Ya, Hapus Sekarang
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
+
                         </tbody>
+
                         <tfoot>
                             <tr>
                                 <th>No</th>
@@ -93,6 +156,6 @@
             </div>
         </div>
 
-        <!-- Add your content here -->
     </div>
+    <!-- Add your content here -->
 @endsection
