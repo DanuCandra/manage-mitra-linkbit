@@ -45,14 +45,14 @@ class DokumenController extends Controller
             'tahun' => 'required|integer',
 
             // PDF document
-            'nib'            => 'nullable|file|mimes:pdf|max:2048',
-            'sertif_standar' => 'nullable|file|mimes:pdf|max:2048',
-            'kso'            => 'nullable|file|mimes:pdf|max:2048',
+            'nib'            => 'nullable|file|mimes:pdf|max:10240',
+            'sertif_standar' => 'nullable|file|mimes:pdf|max:10240',
+            'kso'            => 'nullable|file|mimes:pdf|max:10240',
 
             // Images
-            'foto_ktp'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_usaha'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_brosur'  => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_ktp'     => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'foto_usaha'   => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'foto_brosur'  => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
         ]);
 
         $user = Auth::user();
@@ -148,14 +148,14 @@ class DokumenController extends Controller
             'tahun' => 'required|integer',
 
             // PDF
-            'nib'            => 'nullable|file|mimes:pdf|max:2048',
-            'sertif_standar' => 'nullable|file|mimes:pdf|max:2048',
-            'kso'            => 'nullable|file|mimes:pdf|max:2048',
+            'nib'            => 'nullable|file|mimes:pdf|max:10240',
+            'sertif_standar' => 'nullable|file|mimes:pdf|max:10240',
+            'kso'            => 'nullable|file|mimes:pdf|max:10240',
 
             // Images
-            'foto_ktp'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_usaha'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_brosur'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_ktp'       => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'foto_usaha'     => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            'foto_brosur'    => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
         ]);
 
         // mapping folder penyimpanan
