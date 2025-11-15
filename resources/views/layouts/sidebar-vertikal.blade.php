@@ -47,6 +47,7 @@
                           </li>
                       @endif
 
+
                       @if (Auth::check() && Auth::user()->role === 'mitra')
                           <li class="sidebar-item">
                               <a href="{{ url('/mitra-dashboard') }}"
@@ -60,6 +61,13 @@
                                   class="sidebar-link waves-effect {{ Request::is('profile/*') ? 'active' : '' }}">
                                   <i class="ti ti-aperture"></i>
                                   <span class="hide-menu">Profil Mitra</span>
+                              </a>
+                          </li>
+                          <li class="sidebar-item">
+                              <a href="{{ url('/dokumen/manage-dokumen') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('dokumen/*') ? 'active' : '' }}">
+                                  <i class="ti ti-file"></i>
+                                  <span class="hide-menu">Dokumen</span>
                               </a>
                           </li>
                       @endif

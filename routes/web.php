@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\DokumenController;
 
 // PER LOGINAN GAYS WKWK
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -37,9 +38,18 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::get('/profile/edit-profile/{id}', [MitraController::class, 'edit_profile'])->name('edit_profile');
     Route::post('/profile/update-profile/{id}', [MitraController::class, 'update_profile'])->name('update_profile');
     Route::get('/profile/view-profile/{id}', [MitraController::class, 'view_profile'])->name('view_profile');
+
+    // dokumen mitra
+    Route::get('/dokumen/manage-dokumen', [DokumenController::class, 'manage_dokumen'])->name('dokumen.manage');
+    Route::get('/dokumen/create/', [DokumenController::class, 'create'])->name('dokumen.create');
+    Route::post('/dokumen/store/', [DokumenController::class, 'store'])->name('dokumen.store');
+    Route::get('/dokumen/view/{id}', [DokumenController::class, 'view'])->name('dokumen.view');
+    Route::delete('/dokumen/delete/{id}', [DokumenController::class, 'destroy'])->name('dokumen.destroy');
+    Route::get('/dokumen/edit/{id}', [DokumenController::class, 'edit'])->name('dokumen.edit');
+    Route::post('/dokumen/update/{id}', [DokumenController::class, 'update'])->name('dokumen.update');
+    Route::get('/dokumen/download-all/{id}', [DokumenController::class, 'downloadAll'])->name('dokumen.downloadAll');
 });
 
 Route::middleware(['auth', 'role:admin,mitra'])->group(function () {
     // Route untuk admin dan mitra di sini
 });
-

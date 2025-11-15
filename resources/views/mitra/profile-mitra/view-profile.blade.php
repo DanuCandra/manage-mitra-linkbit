@@ -97,7 +97,7 @@
                     <!-- MAP (READONLY) -->
                     <div class="row">
                         <div class="col-md-12">
-                            <div id="viewMap" style="height: 350px; border-radius: 10px; margin-top: 15px;"></div>
+                            <div id="viewMap" style="height: 350px; border-radius: 10px; margin-top: 15px; z-index: 1; "></div>
                         </div>
                     </div>
 

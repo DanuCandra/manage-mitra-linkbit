@@ -102,7 +102,7 @@
                         <!-- MAP berada tepat di bawah kolom Titik Koordinat -->
                         <div class="row">
                             <div class="col-md-6 offset-md-6">
-                                <div id="map" style="height: 350px; border-radius: 10px;"></div>
+                                <div id="map" style="height: 350px; border-radius: 10px; z-index: 1;"></div>
                             </div>
                         </div>
 
