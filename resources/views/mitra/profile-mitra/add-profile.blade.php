@@ -59,24 +59,20 @@
                             </div>
                         </div>
                         <!--/row-->
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Nama Brand</label>
                                     <input type="text" name="nama_brand" class="form-control"
-                                        placeholder="Nama brand usaha" />
+                                        placeholder="Nama brand usaha">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Titik Koordinat</label>
-                                    <input type="text" name="tikor" class="form-control"
-                                        placeholder="-6.973821, 110.418733" />
-                                    <small class="form-control-feedback">
-                                        Contoh: -6.973821, 110.418733
-                                    </small>
+                                    <label class="form-label">Jumlah Karyawan</label>
+                                    <input type="number" name="jml_karyawan" class="form-control"
+                                        placeholder="Masukkan jumlah karyawan" />
                                 </div>
                             </div>
                         </div>
@@ -90,14 +86,27 @@
                                 </div>
                             </div>
 
+
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Jumlah Karyawan</label>
-                                    <input type="number" name="jml_karyawan" class="form-control"
-                                        placeholder="Masukkan jumlah karyawan" />
+                                    <label class="form-label">Titik Koordinat</label>
+                                    <input type="text" id="tikor" name="tikor" class="form-control"
+                                        placeholder="-6.973821, 110.418733">
+                                    <small class="form-control-feedback">
+                                        Klik lokasi pada peta untuk mengisi koordinat otomatis.
+                                    </small>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- MAP berada tepat di bawah kolom Titik Koordinat -->
+                        <div class="row">
+                            <div class="col-md-6 offset-md-6">
+                                <div id="map" style="height: 350px; border-radius: 10px;"></div>
+                            </div>
+                        </div>
+
+
 
                     </div>
                     <hr />
@@ -159,4 +168,44 @@
         </div>
         <!-- end Person Info -->
     </div>
+
+    @push('scripts')
+        <script>
+            // Set lokasi awal peta (Semarang)
+            var map = L.map('map').setView([-6.966, 110.416], 13);
+
+            // Load Tile / Peta
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+
+            let marker;
+
+            // Ketika peta diklik
+            map.on('click', function(e) {
+                const lat = e.latlng.lat.toFixed(6);
+                const lng = e.latlng.lng.toFixed(6);
+
+                // Isi ke input
+                document.getElementById("tikor").value = `${lat}, ${lng}`;
+
+                // Jika marker sudah ada → hapus dulu
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+
+                // Tambahkan marker baru
+                marker = L.marker([lat, lng], {
+                    draggable: true
+                }).addTo(map);
+
+                // Update input jika marker di-drag
+                marker.on('dragend', function() {
+                    const pos = marker.getLatLng();
+                    document.getElementById("tikor").value =
+                        `${pos.lat.toFixed(6)}, ${pos.lng.toFixed(6)}`;
+                });
+            });
+        </script>
+    @endpush
 @endsection

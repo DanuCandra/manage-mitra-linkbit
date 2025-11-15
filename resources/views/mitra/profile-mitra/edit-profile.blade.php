@@ -75,22 +75,21 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Titik Koordinat</label>
-                                    <input type="text" name="tikor" class="form-control"
-                                        placeholder="-6.973821, 110.418733" value="{{ $mitra->tikor }}" />
-                                    <small class="form-control-feedback">
-                                        Contoh: -6.973821, 110.418733
-                                    </small>
+                                    <label class="form-label">Jumlah Karyawan</label>
+                                    <input type="number" name="jml_karyawan" class="form-control"
+                                        placeholder="Masukkan jumlah karyawan" value="{{ $mitra->jml_karyawan }}" />
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Bandwidth</label>
-                                    <input type="text" name="bandwith" class="form-control" placeholder="Jika masih kosong hubungi admin"
-                                        value="{{ $mitra->bandwith }}" disabled />
+                                    <input type="text" name="bandwith" class="form-control"
+                                        placeholder="Jika masih kosong hubungi admin" value="{{ $mitra->bandwith }}"
+                                        disabled />
                                     <small class="form-control-feedback">
                                         Untuk mengubah bandwidth, silakan hubungi admin.
                                     </small>
@@ -99,12 +98,23 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Jumlah Karyawan</label>
-                                    <input type="number" name="jml_karyawan" class="form-control"
-                                        placeholder="Masukkan jumlah karyawan" value="{{ $mitra->jml_karyawan }}" />
+                                    <label class="form-label">Titik Koordinat</label>
+                                    <input type="text" id="tikor" name="tikor" class="form-control"
+                                        placeholder="-6.973821, 110.418733" value="{{ $mitra->tikor }}" />
+                                    <small class="form-control-feedback">
+                                        Klik lokasi pada peta untuk mengubah koordinat otomatis.
+                                    </small>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- MAP -->
+                        <div class="row">
+                            <div class="col-md-6 offset-md-6">
+                                <div id="map" style="height: 350px; border-radius: 10px;"></div>
+                            </div>
+                        </div>
+
 
 
                     </div>
@@ -169,4 +179,48 @@
         </div>
         <!-- end Person Info -->
     </div>
+    @push('scripts')
+        <script>
+            // Ambil value awal dari database
+            let initial = "{{ $mitra->tikor }}";
+
+            let lat = -6.973821; // default Semarang
+            let lng = 110.418733;
+
+            // Jika sudah ada koordinat di database → gunakan itu
+            if (initial && initial.includes(',')) {
+                let parts = initial.split(',');
+                lat = parseFloat(parts[0]);
+                lng = parseFloat(parts[1]);
+            }
+
+            // Inisialisasi map
+            var map = L.map('map').setView([lat, lng], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+
+            // Buat marker di titik awal
+            var marker = L.marker([lat, lng], {
+                draggable: true
+            }).addTo(map);
+
+            // Update input saat marker digeser
+            marker.on('dragend', function(e) {
+                let pos = marker.getLatLng();
+                document.getElementById('tikor').value = pos.lat.toFixed(6) + ", " + pos.lng.toFixed(6);
+            });
+
+            // Klik map → pindahkan marker
+            map.on('click', function(e) {
+                let newLat = e.latlng.lat;
+                let newLng = e.latlng.lng;
+
+                marker.setLatLng([newLat, newLng]);
+
+                document.getElementById('tikor').value = newLat.toFixed(6) + ", " + newLng.toFixed(6);
+            });
+        </script>
+    @endpush
 @endsection

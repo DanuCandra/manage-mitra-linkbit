@@ -66,9 +66,9 @@
                         <!--/span-->
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="form-label text-end col-md-3">Tiktik Koordinat:</label>
+                                <label class="form-label text-end col-md-3">Jumlah Karyawan:</label>
                                 <div class="col-md-9">
-                                    <p>{{ $mitra->tikor }}</p>
+                                    <p>{{ $mitra->jml_karyawan }}</p>
                                 </div>
                             </div>
                         </div>
@@ -83,18 +83,24 @@
                                 </div>
                             </div>
                         </div>
-                        <!--/span-->
+
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="form-label text-end col-md-3">Jumlah Karyawan:</label>
+                                <label class="form-label text-end col-md-3">Titik Koordinat:</label>
                                 <div class="col-md-9">
-                                    <p>{{ $mitra->jml_karyawan }}</p>
+                                    <p>{{ $mitra->tikor }}</p>
                                 </div>
                             </div>
                         </div>
-                        <!--/span-->
                     </div>
-                    <!--/row-->
+
+                    <!-- MAP (READONLY) -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="viewMap" style="height: 350px; border-radius: 10px; margin-top: 15px;"></div>
+                        </div>
+                    </div>
+
 
                 </div>
                 <hr class="m-0" />
@@ -163,7 +169,8 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-offset-3 col-md-9">
-                                        <a href="{{ route('edit_profile', $mitra->id) }}" type="submit" class="btn btn-primary">
+                                        <a href="{{ route('edit_profile', $mitra->id) }}" type="submit"
+                                            class="btn btn-primary">
                                             <i class="ti ti-edit fs-5"></i>
                                             Edit
                                         </a>
@@ -178,4 +185,42 @@
         </form>
     </div>
     <!-- start Form with view only -->
+
+    @push('scripts')
+        <script>
+            let tikor = "{{ $mitra->tikor }}";
+
+            // Set default jika kosong
+            let lat = -6.973821;
+            let lng = 110.418733;
+
+            // Jika tikor ada → pakai nilai database
+            if (tikor && tikor.includes(',')) {
+                let split = tikor.split(',');
+                lat = parseFloat(split[0]);
+                lng = parseFloat(split[1]);
+            }
+
+            // Map boleh digeser, zoom boleh
+            var viewMap = L.map('viewMap', {
+                zoomControl: true,
+                dragging: true,
+                scrollWheelZoom: true,
+                doubleClickZoom: true,
+                boxZoom: true,
+                keyboard: true,
+                touchZoom: true
+            }).setView([lat, lng], 15);
+
+            // Tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(viewMap);
+
+            // Marker tidak draggable (tetap di tempat)
+            L.marker([lat, lng], {
+                draggable: false
+            }).addTo(viewMap);
+        </script>
+    @endpush
 @endsection
