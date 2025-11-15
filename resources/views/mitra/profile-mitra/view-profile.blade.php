@@ -167,9 +167,6 @@
                                             <i class="ti ti-edit fs-5"></i>
                                             Edit
                                         </a>
-                                        <button type="button" class="btn bg-danger-subtle text-danger ms-6">
-                                            Cancel
-                                        </button>
                                     </div>
                                 </div>
                             </div>

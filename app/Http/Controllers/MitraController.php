@@ -13,6 +13,12 @@ class MitraController extends Controller
 
     public function add_profile()
     {
+        $user = Auth::user();
+
+        if ($user && $user->mitra) {
+            return redirect()->route('view_profile', ['id' => $user->mitra->id]);
+        }
+
         return view('mitra.profile-mitra.add-profile');
     }
 
@@ -93,7 +99,7 @@ class MitraController extends Controller
 
         $mitra->update($validated);
 
-        return redirect()->route('edit_profile', ['id' => $id])->with('success', 'Profil mitra berhasil diperbarui!');
+        return redirect()->route('view_profile', ['id' => $id])->with('success', 'Profil mitra berhasil diperbarui!');
     }
 
     public function view_profile($id)

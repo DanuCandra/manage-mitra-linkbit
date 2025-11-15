@@ -27,15 +27,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/manage-users/update/{id}', [UsersController::class, 'update'])->name('update-user');
 });
 
+// khusus mitra
 Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::get('/mitra-dashboard', [AuthController::class, 'mitra_dashboard'])->name('mitra-dashboard');
 
     // profile mitra
-    Route::get('/mitra/add-profile', [MitraController::class, 'add_profile'])->name('add_profile');
-    Route::post('/mitra/store-profile', [MitraController::class, 'store_profile'])->name('store_profile');
-    Route::get('/mitra/edit-profile/{id}', [MitraController::class, 'edit_profile'])->name('edit_profile');
-    Route::post('/mitra/update-profile/{id}', [MitraController::class, 'update_profile'])->name('update_profile');
-    Route::get('/mitra/view-profile/{id}', [MitraController::class, 'view_profile'])->name('view_profile');
+    Route::get('/profile/add-profile', [MitraController::class, 'add_profile'])->name('add_profile');
+    Route::post('/profile/store-profile', [MitraController::class, 'store_profile'])->name('store_profile');
+    Route::get('/profile/edit-profile/{id}', [MitraController::class, 'edit_profile'])->name('edit_profile');
+    Route::post('/profile/update-profile/{id}', [MitraController::class, 'update_profile'])->name('update_profile');
+    Route::get('/profile/view-profile/{id}', [MitraController::class, 'view_profile'])->name('view_profile');
 });
 
 Route::middleware(['auth', 'role:admin,mitra'])->group(function () {

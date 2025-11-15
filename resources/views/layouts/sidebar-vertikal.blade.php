@@ -31,92 +31,42 @@
                       <!-- ---------------------------------- -->
                       @if (Auth::check() && Auth::user()->role === 'admin')
                           <li class="sidebar-item">
-                              <a class="sidebar-link {{ Request::is('admin-dashboard') ? 'active' : '' }}"
-                                  href="{{ url('/admin-dashboard') }}" id="get-url" aria-expanded="false">
-                                  <span>
-                                      <i class="ti ti-aperture"></i>
-                                  </span>
+                              <a href="{{ url('/admin-dashboard') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('admin-dashboard') ? 'active' : '' }}">
+                                  <span><i class="ti ti-aperture"></i></span>
                                   <span class="hide-menu">Dashboard</span>
                               </a>
                           </li>
+
+                          <li class="sidebar-item">
+                              <a href="{{ url('/manage-users') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('manage-users*') ? 'active' : '' }}">
+                                  <span><i class="ti ti-users"></i></span>
+                                  <span class="hide-menu">Manage Users</span>
+                              </a>
+                          </li>
                       @endif
+
                       @if (Auth::check() && Auth::user()->role === 'mitra')
                           <li class="sidebar-item">
-                              <a class="sidebar-link {{ Request::is('mitra-dashboard') ? 'active' : '' }}"
-                                  href="{{ url('/mitra-dashboard') }}" id="get-url" aria-expanded="false">
-                                  <span>
-                                      <i class="ti ti-aperture"></i>
-                                  </span>
+                              <a href="{{ url('/mitra-dashboard') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('mitra-dashboard') ? 'active' : '' }}">
+                                  <i class="ti ti-aperture"></i>
                                   <span class="hide-menu">Dashboard</span>
+                              </a>
+                          </li>
+                          <li class="sidebar-item">
+                              <a href="{{ url('/profile/add-profile') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('profile/*') ? 'active' : '' }}">
+                                  <i class="ti ti-aperture"></i>
+                                  <span class="hide-menu">Profil Mitra</span>
                               </a>
                           </li>
                       @endif
 
-                      @if (Auth::check() && Auth::user()->role === 'admin')
-                      <li class="sidebar-item">
-                          <a class="sidebar-link {{ Request::is('manage-users/*') ? 'active' : '' }}"
-                              href="{{ url('manage-users') }}">
-                              <span>
-                                  <i class="ti ti-aperture"></i>
-                              </span>
-                              <span class="hide-menu">Manage Users</span>
-                          </a>
-                      </li>
-                      @endif
 
-                      <!-- ---------------------------------- -->
-                      <!-- Frontend page -->
-                      <!-- ---------------------------------- -->
-                      <li class="sidebar-item">
-                          <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
-                              <span class="d-flex">
-                                  <i class="ti ti-layout-grid"></i>
-                              </span>
-                              <span class="hide-menu">Frontend page</span>
-                          </a>
-                          <ul aria-expanded="false" class="collapse first-level">
-                              <li class="sidebar-item">
-                                  <a href="./main/frontend-landingpage.html" class="sidebar-link">
-                                      <div class="round-16 d-flex align-items-center justify-content-center">
-                                          <i class="ti ti-circle"></i>
-                                      </div>
-                                      <span class="hide-menu">Homepage</span>
-                                  </a>
-                              </li>
-                              <li class="sidebar-item">
-                                  <a href="./main/frontend-aboutpage.html" class="sidebar-link">
-                                      <div class="round-16 d-flex align-items-center justify-content-center">
-                                          <i class="ti ti-circle"></i>
-                                      </div>
-                                      <span class="hide-menu">About Us</span>
-                                  </a>
-                              </li>
-                              <li class="sidebar-item">
-                                  <a href="./main/frontend-contactpage.html" class="sidebar-link">
-                                      <div class="round-16 d-flex align-items-center justify-content-center">
-                                          <i class="ti ti-circle"></i>
-                                      </div>
-                                      <span class="hide-menu">Contact Us</span>
-                                  </a>
-                              </li>
-                              <li class="sidebar-item">
-                                  <a href="./main/frontend-blogpage.html" class="sidebar-link">
-                                      <div class="round-16 d-flex align-items-center justify-content-center">
-                                          <i class="ti ti-circle"></i>
-                                      </div>
-                                      <span class="hide-menu">Blog</span>
-                                  </a>
-                              </li>
-                              <li class="sidebar-item">
-                                  <a href="./main/frontend-blogdetailpage.html" class="sidebar-link">
-                                      <div class="round-16 d-flex align-items-center justify-content-center">
-                                          <i class="ti ti-circle"></i>
-                                      </div>
-                                      <span class="hide-menu">Blog Details</span>
-                                  </a>
-                              </li>
-                          </ul>
-                      </li>
+
+
                   </ul>
               </nav>
 

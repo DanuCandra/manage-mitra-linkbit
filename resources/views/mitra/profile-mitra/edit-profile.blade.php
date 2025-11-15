@@ -18,7 +18,7 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label">Nama Mitra</label>
+                                    <label class="form-label">Nama Lengkap</label>
                                     <input type="text" name="nama_mitra" class="form-control" placeholder="Nama Mitra"
                                         required value="{{ $mitra->nama_mitra }}" />
                                     <small class="form-control-feedback">
@@ -32,9 +32,7 @@
                                     <label class="form-label">NIK</label>
                                     <input type="text" name="nik" class="form-control"
                                         placeholder="Nomor Induk Kependudukan" value="{{ $mitra->nik }}" />
-                                    <small class="form-control-feedback">
-                                        Isi NIK sesuai KTP (jika ada)
-                                    </small>
+
                                 </div>
                             </div>
 
@@ -45,7 +43,8 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Tanggal Lahir</label>
-                                    <input type="date" name="tgl_lahir" class="form-control" value="{{ $mitra->tgl_lahir }}" />
+                                    <input type="date" name="tgl_lahir" class="form-control"
+                                        value="{{ $mitra->tgl_lahir }}" />
                                     <small class="form-control-feedback">
                                         Pilih tanggal lahir
                                     </small>
@@ -55,7 +54,11 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">NPWP</label>
-                                    <input type="text" name="npwp" class="form-control" placeholder="Nomor NPWP" value="{{ $mitra->npwp }}" />
+                                    <input type="text" name="npwp" class="form-control" placeholder="Nomor NPWP"
+                                        value="{{ $mitra->npwp }}" />
+                                    <small class="form-control-feedback">
+                                        Isi NPWP sesuai dokumen (jika ada)
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -86,8 +89,11 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Bandwidth</label>
-                                    <input type="text" name="bandwith" class="form-control"
-                                        placeholder="Contoh: 50 Mbps" value="{{ $mitra->bandwith }}" />
+                                    <input type="text" name="bandwith" class="form-control" placeholder="Jika masih kosong hubungi admin"
+                                        value="{{ $mitra->bandwith }}" disabled />
+                                    <small class="form-control-feedback">
+                                        Untuk mengubah bandwidth, silakan hubungi admin.
+                                    </small>
                                 </div>
                             </div>
 
@@ -99,6 +105,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
                     <hr />
@@ -152,9 +159,9 @@
                             <button type="submit" class="btn btn-primary">
                                 Simpan
                             </button>
-                            <button type="reset" class="btn bg-danger-subtle text-danger ms-6">
+                            <a href="{{ url()->previous() }}" class="btn bg-danger-subtle text-danger ms-6">
                                 Batal
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

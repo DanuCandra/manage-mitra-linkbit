@@ -86,7 +86,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Bandwidth</label>
                                     <input type="text" name="bandwith" class="form-control"
-                                        placeholder="Contoh: 50 Mbps" />
+                                        placeholder="Bandwidth akan di isi oleh admin" disabled />
                                 </div>
                             </div>
 
@@ -151,9 +151,7 @@
                             <button type="submit" class="btn btn-primary">
                                 Simpan
                             </button>
-                            <button type="reset" class="btn bg-danger-subtle text-danger ms-6">
-                                Batal
-                            </button>
+
                         </div>
                     </div>
                 </div>
