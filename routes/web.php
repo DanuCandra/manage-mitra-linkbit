@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\ProdukController;
 
 // PER LOGINAN GAYS WKWK
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -48,6 +49,15 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::get('/dokumen/edit/{id}', [DokumenController::class, 'edit'])->name('dokumen.edit');
     Route::post('/dokumen/update/{id}', [DokumenController::class, 'update'])->name('dokumen.update');
     Route::get('/dokumen/download-all/{id}', [DokumenController::class, 'downloadAll'])->name('dokumen.downloadAll');
+
+    // produk mitra
+    Route::get('/produk/manage-produk', [ProdukController::class, 'manage_produk'])->name('produk.manage');
+    Route::get('/produk/create/', [ProdukController::class, 'create'])->name('produk.create');
+    Route::post('/produk/store/', [ProdukController::class, 'store'])->name('produk.store');
+    Route::get('/produk/view/{id}', [ProdukController::class, 'view'])->name('produk.view');
+    Route::delete('/produk/delete/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+    Route::get('/produk/edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
+    Route::post('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
 });
 
 Route::middleware(['auth', 'role:admin,mitra'])->group(function () {

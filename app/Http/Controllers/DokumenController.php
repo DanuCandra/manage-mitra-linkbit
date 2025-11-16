@@ -22,7 +22,7 @@ class DokumenController extends Controller
         $mitra = Mitra::where('user_id', $user->id)->first();
 
         if (!$mitra) {
-            return redirect()->back()->with('error', 'Mitra tidak ditemukan.');
+            return redirect()->route('add_profile')->with('error', 'Silakan isi data mitra terlebih dahulu.');
         }
 
         // ambil semua dokumen milik mitra tersebut

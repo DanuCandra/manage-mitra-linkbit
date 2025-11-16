@@ -130,7 +130,7 @@
                     <a href="{{ route('dokumen.edit', $dokumen->id) }}" class="btn btn-primary">
                         <i class="ti ti-edit me-1"></i>Edit Dokumen
                     </a>
-                    <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">
+                    <a href="{{ url()->previous() }}" class="btn bg-danger-subtle text-danger ms-6">
                         <i class="ti ti-arrow-left me-1"></i>Kembali
                     </a>
                 </div>

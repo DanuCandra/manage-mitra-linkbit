@@ -52,22 +52,29 @@
                           <li class="sidebar-item">
                               <a href="{{ url('/mitra-dashboard') }}"
                                   class="sidebar-link waves-effect {{ Request::is('mitra-dashboard') ? 'active' : '' }}">
-                                  <i class="ti ti-aperture"></i>
+                                  <i class="ti ti-dashboard"></i>
                                   <span class="hide-menu">Dashboard</span>
                               </a>
                           </li>
                           <li class="sidebar-item">
                               <a href="{{ url('/profile/add-profile') }}"
                                   class="sidebar-link waves-effect {{ Request::is('profile/*') ? 'active' : '' }}">
-                                  <i class="ti ti-aperture"></i>
+                                  <i class="ti ti-user-circle"></i>
                                   <span class="hide-menu">Profil Mitra</span>
                               </a>
                           </li>
                           <li class="sidebar-item">
                               <a href="{{ url('/dokumen/manage-dokumen') }}"
                                   class="sidebar-link waves-effect {{ Request::is('dokumen/*') ? 'active' : '' }}">
-                                  <i class="ti ti-file"></i>
+                                  <i class="ti ti-file-text"></i>
                                   <span class="hide-menu">Dokumen</span>
+                              </a>
+                          </li>
+                          <li class="sidebar-item">
+                              <a href="{{ url('/produk/manage-produk') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('produk/*') ? 'active' : '' }}">
+                                  <i class="ti ti-box"></i>
+                                  <span class="hide-menu">Produk</span>
                               </a>
                           </li>
                       @endif
