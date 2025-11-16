@@ -37,6 +37,8 @@
 
     composer install --prefer-dist --no-dev
 
+    php ./artisan storage:link
+
     echo "🚀 Running Migrations..."
     php ./artisan migrate --force || { echo "❌ Migration failed"; exit 1; }
 
