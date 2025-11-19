@@ -1,8 +1,8 @@
-@servers(['production' => ['root@128.199.106.124']])
+@servers(['production' => ['danu@103.190.112.102:9234']])
 
 @setup
     $repo = 'https://github.com/DanuCandra/manage-mitra-linkbit.git';
-    $appDir = '/var/www/mitra';
+    $appDir = '/var/www/si-mitra';
     $branch = 'main';
 
     date_default_timezone_set('Asia/Jakarta');
@@ -44,7 +44,6 @@
 
     echo "🚀 Running Seeder... "
     {{-- php ./artisan db:seed --class=UserSeeder --force || { echo "❌ Seeding failed"; exit 1; } --}}
-
 @endtask
 
 @task('live', ['on' => 'production'])
@@ -53,9 +52,7 @@
     ln -nfs {{ $deployment }} {{ $serve }}
 
     {{-- sudo su --}}
-    chown -R www-data: /var/www
-
-    systemctl restart php8.3-fpm
-
-    systemctl restart nginx
+    sudo chown -R www-data: /var/www
+    sudo systemctl restart php8.3-fpm
+    sudo systemctl restart nginx
 @endtask
