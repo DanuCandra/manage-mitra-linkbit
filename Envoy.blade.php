@@ -43,7 +43,7 @@
     php ./artisan migrate --force || { echo "❌ Migration failed"; exit 1; }
 
     echo "🚀 Running Seeder...."
-    {{-- php ./artisan db:seed --class=UserSeeder --force  || { echo "❌ Seeding failed"; exit 1; } --}}
+    {{-- php ./artisan db:seed --class=UserSeeder --force || { echo "❌ Seeding failed"; exit 1; } --}}
 @endtask
 
 @task('live', ['on' => 'production'])
