@@ -1,4 +1,4 @@
-@servers(['production' => ['danu@103.190.112.102:9234']])
+@servers(['production' => ['production']])
 
 @setup
     $repo = 'https://github.com/DanuCandra/manage-mitra-linkbit.git';
@@ -51,7 +51,7 @@
 
     ln -nfs {{ $deployment }} {{ $serve }}
 
-    
+
     sudo chown -R www-data: /var/www
     sudo systemctl restart php8.3-fpm
     sudo systemctl restart nginx
