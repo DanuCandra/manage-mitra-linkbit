@@ -51,7 +51,7 @@
 
     ln -nfs {{ $deployment }} {{ $serve }}
 
-    {{-- sudo su --}}
+    
     sudo chown -R www-data: /var/www
     sudo systemctl restart php8.3-fpm
     sudo systemctl restart nginx
