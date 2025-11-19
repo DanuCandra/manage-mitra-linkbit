@@ -1,4 +1,4 @@
-@servers(['production' => ['deploy@103.190.112.102:9234']])
+@servers(['production' => ['production']])
 
 @setup
     $repo = 'https://github.com/DanuCandra/manage-mitra-linkbit.git';
