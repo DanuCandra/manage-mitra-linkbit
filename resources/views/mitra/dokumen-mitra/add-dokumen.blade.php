@@ -18,7 +18,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">NIB (PDF)</label>
-                                    <input type="file" name="nib" class="form-control" accept="application/pdf" />
+                                    <input type="file" name="nib" class="form-control" accept="application/pdf" required />
                                     <small class="text-muted">File harus berupa PDF</small>
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Sertifikat Standar (PDF)</label>
                                     <input type="file" name="sertif_standar" class="form-control"
-                                        accept="application/pdf" />
+                                        accept="application/pdf" required />
                                     <small class="text-muted">File harus berupa PDF</small>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">KSO (PDF)</label>
-                                    <input type="file" name="kso" class="form-control" accept="application/pdf" />
+                                    <input type="file" name="kso" class="form-control" accept="application/pdf" required />
                                     <small class="text-muted">File harus berupa PDF</small>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Foto KTP (JPG/PNG)</label>
-                                    <input type="file" name="foto_ktp" class="form-control" accept="image/*" />
+                                    <input type="file" name="foto_ktp" class="form-control" accept="image/*" required />
                                     <small class="text-muted">Format: JPG, JPEG, PNG</small>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Foto Usaha (JPG/PNG)</label>
-                                    <input type="file" name="foto_usaha" class="form-control" accept="image/*" />
+                                    <input type="file" name="foto_usaha" class="form-control" accept="image/*" required />
                                     <small class="text-muted">Format: JPG, JPEG, PNG</small>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Foto Brosur (JPG/PNG)</label>
-                                    <input type="file" name="foto_brosur" class="form-control" accept="image/*" />
+                                    <input type="file" name="foto_brosur" class="form-control" accept="image/*" required />
                                     <small class="text-muted">Format: JPG, JPEG, PNG</small>
                                 </div>
                             </div>
