@@ -39,7 +39,7 @@
 
     php ./artisan storage:link
 
-    echo "🚀 Running Migrations...."
+    echo "🚀 Running Migrations.."
     php ./artisan migrate --force || { echo "❌ Migration failed"; exit 1; }
 
     echo "🚀 Running Seeder..."
