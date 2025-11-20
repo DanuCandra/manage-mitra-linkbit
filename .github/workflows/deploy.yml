@@ -33,7 +33,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "Host production" >> ~/.ssh/config
           echo "  HostName ${{ secrets.SSH_HOST }}" >> ~/.ssh/config
-          echo "  User deploy" >> ~/.ssh/config
+          echo "  User danu" >> ~/.ssh/config
           echo "  Port ${{ secrets.SSH_PORT }}" >> ~/.ssh/config
           echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
           chmod 600 ~/.ssh/config
