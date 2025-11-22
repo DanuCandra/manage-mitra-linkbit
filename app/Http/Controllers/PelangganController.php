@@ -154,4 +154,18 @@ class PelangganController extends Controller
 
         return redirect()->route('pelanggan.manage')->with('success', 'Pelanggan berhasil dihapus');
     }
+
+    public function view($id)
+    {
+        $user = Auth::user();
+        $mitra = Mitra::where('user_id', $user->id)->first();
+
+        if (!$mitra) {
+            return redirect()->route('add_profile')->with('error', 'Silakan isi data mitra terlebih dahulu.');
+        }
+
+        $pelanggan = Pelanggan::where('id', $id)->where('mitra_id', $mitra->id)->with('produk')->firstOrFail();
+
+        return view('mitra.pelanggan-mitra.view-pelanggan', compact('pelanggan'));
+    }
 }

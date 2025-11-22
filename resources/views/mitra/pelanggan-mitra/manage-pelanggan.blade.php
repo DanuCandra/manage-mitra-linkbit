@@ -40,8 +40,8 @@
                         <div class="d-flex flex-wrap gap-2 justify-content-md-end justify-content-start">
                             <!-- Filter Status -->
                             <form action="{{ route('pelanggan.manage') }}" method="GET"
-                            class="d-flex gap-2 grow flex-md-grow-0">
-                            <div class="input-group" style="max-width: 250px;">
+                                class="d-flex gap-2 grow flex-md-grow-0">
+                                <div class="input-group" style="max-width: 250px;">
                                     <span class="input-group-text bg-light border-end-0">
                                         <i class="ti ti-filter fs-5"></i>
                                     </span>
@@ -117,21 +117,27 @@
                                     <td>
                                         <div class="d-flex gap-2">
                                             <div class="d-flex gap-2">
-                                            <!-- Tombol Edit -->
-                                            <a type="button" class="btn mb-1 bg-warning-subtle text-warning px-4 fs-4"
-                                                data-bs-toggle="modal" data-bs-target="#edit_produk_{{ $p->id }}"
-                                                title="Edit Produk">
-                                                <i class="ti ti-edit"></i>
-                                            </a>
+                                                <a href="{{ route('pelanggan.view', $p->id) }}"
+                                                    class="btn mb-1 bg-info-subtle text-info px-4 fs-4"
+                                                    title="Lihat Pelanggan">
+                                                    <i class="ti ti-eye"></i>
+                                                </a>
+                                                <!-- Tombol Edit -->
+                                                <a type="button" class="btn mb-1 bg-warning-subtle text-warning px-4 fs-4"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#edit_produk_{{ $p->id }}" title="Edit Produk">
+                                                    <i class="ti ti-edit"></i>
+                                                </a>
 
-                                            <!-- Tombol Hapus -->
-                                            <a type="button" class="btn mb-1 bg-danger-subtle text-danger px-4 fs-4"
-                                                data-bs-toggle="modal" data-bs-target="#hapus_pelanggan_{{ $p->id }}"
-                                                title="Hapus Produk">
-                                                <i class="ti ti-trash"></i>
-                                            </a>
+                                                <!-- Tombol Hapus -->
+                                                <a type="button" class="btn mb-1 bg-danger-subtle text-danger px-4 fs-4"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#hapus_pelanggan_{{ $p->id }}"
+                                                    title="Hapus Produk">
+                                                    <i class="ti ti-trash"></i>
+                                                </a>
 
-                                        </div>
+                                            </div>
                                     </td>
                                 </tr>
 
@@ -198,12 +204,6 @@
                                     </div>
                                 </div>
                             @empty
-                                <tr>
-                                    <td colspan="6" class="text-center py-4">
-                                        <i class="ti ti-folder-off fs-7 text-muted d-block mb-2"></i>
-                                        <span class="text-muted">Tidak ada data pelanggan</span>
-                                    </td>
-                                </tr>
                             @endforelse
                         </tbody>
 

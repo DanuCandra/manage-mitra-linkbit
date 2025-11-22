@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); // mencegah session fixation
             session()->flash('success', 'Login berhasil!');
@@ -64,7 +65,68 @@ class AuthController extends Controller
     }
     public function mitra_dashboard()
     {
-        return view('mitra.dashboard');
+        {
+        $user = Auth::user();
+        $mitra = $user->mitra; // Relasi user -> mitra
+
+        if (!$mitra) {
+            return redirect()->route('add_profile')->with('warning', 'Isi data mitra terlebih dahulu.');
+        }
+
+        // Total Pelanggan
+        $totalPelanggan = $mitra->pelanggan()->count();
+
+        // Total Pelanggan Aktif
+        $pelangganAktif = $mitra->pelanggan()->where('status', 'aktif')->count();
+
+        // Total Pelanggan Non-Aktif
+        $pelangganNonAktif = $mitra->pelanggan()->where('status', 'non-aktif')->count();
+
+        // Total Produk
+        $totalProduk = $mitra->produk()->count();
+
+        // Total Pendapatan Bulanan (dari pelanggan aktif)
+        $pendapatanBulanan = $mitra->pelanggan()
+            ->where('status', 'aktif')
+            ->join('produk', 'pelanggan.produk_id', '=', 'produk.id')
+            ->sum('produk.harga');
+
+        // Pendapatan Bulan Ini (pelanggan yang mulai berlangganan bulan ini)
+        $pendapatanBulanIni = $mitra->pelanggan()
+            ->where('status', 'aktif')
+            ->whereMonth('mulai_berlangganan', Carbon::now()->month)
+            ->whereYear('mulai_berlangganan', Carbon::now()->year)
+            ->join('produk', 'pelanggan.produk_id', '=', 'produk.id')
+            ->sum('produk.harga');
+
+        // Pelanggan Baru Bulan Ini
+        $pelangganBaru = $mitra->pelanggan()
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+
+        // Produk Terlaris (produk dengan pelanggan terbanyak)
+        $produkTerlaris = $mitra->produk()
+            ->withCount('pelanggan')
+            ->orderBy('pelanggan_count', 'desc')
+            ->first();
+
+        // Rata-rata harga produk
+        $rataRataHargaProduk = $mitra->produk()->avg('harga');
+
+        return view('mitra.dashboard', compact(
+            'mitra',
+            'totalPelanggan',
+            'pelangganAktif',
+            'pelangganNonAktif',
+            'totalProduk',
+            'pendapatanBulanan',
+            'pendapatanBulanIni',
+            'pelangganBaru',
+            'produkTerlaris',
+            'rataRataHargaProduk'
+        ));
+    }
     }
 
 
@@ -79,4 +141,6 @@ class AuthController extends Controller
 
         return redirect('/login')->with('success', 'Berhasil logout!');
     }
+
+
 }

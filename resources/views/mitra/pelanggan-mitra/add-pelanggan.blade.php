@@ -12,7 +12,8 @@
                                 <a class="text-muted text-decoration-none" href="{{ route('mitra-dashboard') }}">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item" aria-current="page">
-                                <a class="text-muted text-decoration-none" href="{{ route('pelanggan.manage') }}">Pelanggan</a>
+                                <a class="text-muted text-decoration-none"
+                                    href="{{ route('pelanggan.manage') }}">Pelanggan</a>
                             </li>
                             <li class="breadcrumb-item" aria-current="page">
                                 <a class="" href="{{ route('pelanggan.create') }}">Tambah Pelanggan</a>
@@ -59,8 +60,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Nama Pelanggan <span class="text-danger">*</span></label>
-                                <input type="text" name="nama" class="form-control"
-                                    placeholder="Contoh: Danu Candra" required />
+                                <input type="text" name="nama" class="form-control" placeholder="Contoh: Danu Candra"
+                                    required />
                                 <small class="form-control-feedback text-muted">
                                     Masukkan nama lengkap pelanggan.
                                 </small>
@@ -72,9 +73,9 @@
                         <!-- NIK -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">NIK <span class="text-muted">(Opsional)</span></label>
+                                <label class="form-label">NIK<span class="text-danger">*</span></label>
                                 <input type="text" id="nik" name="nik" class="form-control"
-                                    placeholder="Contoh: 3201234567891234" maxlength="16" />
+                                    placeholder="Contoh: 3201234567891234" maxlength="16" required />
                                 <small class="form-control-feedback text-muted">
                                     Nomor Induk Kependudukan (16 digit).
                                 </small>
@@ -84,8 +85,8 @@
                         <!-- Mulai Berlangganan -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Mulai Berlangganan <span class="text-muted">(Opsional)</span></label>
-                                <input type="date" name="mulai_berlangganan" class="form-control" />
+                                <label class="form-label">Mulai Berlangganan<span class="text-danger">*</span></label>
+                                <input type="date" name="mulai_berlangganan" class="form-control" required />
                                 <small class="form-control-feedback text-muted">
                                     Tanggal mulai berlangganan.
                                 </small>
@@ -97,9 +98,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <label class="form-label">Alamat <span class="text-muted">(Opsional)</span></label>
-                                <textarea name="alamat" class="form-control" rows="3"
-                                    placeholder="Contoh: Jl. Merdeka No. 123, Jakarta Pusat"></textarea>
+                                <label class="form-label">Alamat<span class="text-danger">*</span></label>
+                                <textarea name="alamat" class="form-control" rows="3" placeholder="Contoh: Jl. Merdeka No. 123, Jakarta Pusat"
+                                    required></textarea>
                                 <small class="form-control-feedback text-muted">
                                     Alamat lengkap pelanggan.
                                 </small>
@@ -110,7 +111,7 @@
                 </div>
 
                 <div class="card-body border-top">
-                    <h4 class="card-title">Paket Langganan</h4>
+                    <h4 class="card-title">Paket Langganan<span class="text-danger">*</span></h4>
 
                     <div class="row pt-3">
                         <!-- Pilih Produk -->

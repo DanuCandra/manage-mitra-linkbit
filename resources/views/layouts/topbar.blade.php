@@ -243,9 +243,9 @@
 
                 <div class="d-block d-lg-none py-4">
                     <a href="./main/index.html" class="text-nowrap logo-img">
-                        <img src="{{ url('') }}/assets/images/logos/dark-logo.svg" class="dark-logo"
+                        <img src="{{ url('') }}/assets/images/logos/logo-linkbit-kecil.png" class="dark-logo"
                             alt="Logo-Dark" />
-                        <img src="{{ url('') }}/assets/images/logos/light-logo.svg" class="light-logo"
+                        <img src="{{ url('') }}/assets/images/logos/logo-linkbit-kecil.png" class="light-logo"
                             alt="Logo-light" />
                     </a>
                 </div>
@@ -476,7 +476,7 @@
                                             </div>
                                         </div>
                                         <div class="message-body">
-                                           
+
 
 
                                             <a href="./main/app-email.html"
@@ -749,9 +749,9 @@
                     </li>
                     <li class="nav-item d-none d-xl-block">
                         <a href="./main/index.html" class="text-nowrap nav-link">
-                            <img src="{{ url('') }}/assets/images/logos/dark-logo.svg" class="dark-logo"
+                            <img src="{{ url('') }}/assets/images/logos/logo-linkbit.png" class="dark-logo"
                                 width="180" alt="modernize-img" />
-                            <img src="{{ url('') }}/assets/images/logos/light-logo.svg" class="light-logo"
+                            <img src="{{ url('') }}/assets/images/logos/logo-linkbit.png" class="light-logo"
                                 width="180" alt="modernize-img" />
                         </a>
                     </li>
@@ -985,7 +985,7 @@
                 </ul>
                 <div class="d-block d-xl-none">
                     <a href="./main/index.html" class="text-nowrap nav-link">
-                        <img src="{{ url('') }}/assets/images/logos/dark-logo.svg" width="180"
+                        <img src="{{ url('') }}/assets/images/logos/logo-linkbit.png" width="180"
                             alt="modernize-img" />
                     </a>
                 </div>
