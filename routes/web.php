@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\PelangganController;
 
 // PER LOGINAN GAYS WKWK
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -58,6 +59,15 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::delete('/produk/delete/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
     Route::get('/produk/edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
     Route::post('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
+
+    // Pelanggan Mitra
+    Route::get('/pelanggan/manage', [PelangganController::class, 'manage'])->name('pelanggan.manage');
+    Route::get('/pelanggan/create/', [PelangganController::class, 'create'])->name('pelanggan.create');
+    Route::post('/pelanggan/store/', [PelangganController::class, 'store'])->name('pelanggan.store');
+    Route::get('/pelanggan/view/{id}', [PelangganController::class, 'view'])->name('pelanggan.view');
+    Route::delete('/pelanggan/delete/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+    Route::get('/pelanggan/edit/{id}', [PelangganController::class, 'edit'])->name('pelanggan.edit');
+    Route::post('/pelanggan/update/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
 });
 
 Route::middleware(['auth', 'role:admin,mitra'])->group(function () {

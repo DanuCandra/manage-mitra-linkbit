@@ -83,7 +83,6 @@
 
                 </div>
 
-                <hr />
 
                 <!-- Tombol -->
                 <div class="form-actions">

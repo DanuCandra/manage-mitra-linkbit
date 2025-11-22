@@ -77,6 +77,14 @@
                                   <span class="hide-menu">Produk</span>
                               </a>
                           </li>
+
+                          <li class="sidebar-item">
+                              <a href="{{ url('/pelanggan/manage') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('pelanggan/*') ? 'active' : '' }}">
+                                  <i class="ti ti-users"></i>
+                                  <span class="hide-menu">Pelanggan</span>
+                              </a>
+                          </li>
                       @endif
 
 
