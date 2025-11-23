@@ -17,21 +17,22 @@
                 </div>
                 <div class="col-3">
                     <div class="text-center mb-n5">
-                        <img src="{{ asset('assets/images/breadcrumb/ChatBc.png') }}" alt="modernize-img" class="img-fluid mb-n4" />
+                        <img src="{{ asset('assets/images/breadcrumb/ChatBc.png') }}" alt="modernize-img"
+                            class="img-fluid mb-n4" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="ti ti-check me-2"></i>{{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-    @if(session('error'))
+    @if (session('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="ti ti-alert-circle me-2"></i>{{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -67,35 +68,29 @@
                                     <td>{{ $mitra->user->no_hp ?? '-' }}</td>
                                     <td>
                                         <span class="badge bg-primary-subtle text-primary fs-3">
-                                            {{ $mitra->bandwidth_formatted }}
+                                            {{ $mitra->getFormattedBandwidth() }}
                                         </span>
                                     </td>
                                     <td>
                                         <div class="d-flex gap-2">
                                             <!-- Button Tambah Bandwidth -->
-                                            <button type="button"
-                                                class="btn mb-1 bg-success-subtle text-success px-4 fs-4"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#addBandwidthModal"
+                                            <button type="button" class="btn btn-sm bg-success-subtle text-success"
+                                                data-bs-toggle="modal" data-bs-target="#addBandwidthModal"
                                                 data-mitra-id="{{ $mitra->id }}"
                                                 data-mitra-name="{{ $mitra->nama_mitra }}"
                                                 data-mitra-brand="{{ $mitra->nama_brand ?? '-' }}"
-                                                data-current-bandwidth="{{ $mitra->bandwidth_mbps }}"
-                                                data-current-formatted="{{ $mitra->bandwidth_formatted }}"
+                                                data-current-bandwidth="{{ $mitra->bandwidth ?? '0 Mbps' }}"
                                                 title="Tambah Bandwidth">
                                                 <i class="ti ti-plus fs-5"></i>
                                             </button>
 
                                             <!-- Button Edit Bandwidth -->
-                                            <button type="button"
-                                                class="btn mb-1 bg-warning-subtle text-warning px-4 fs-4"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#editBandwidthModal"
+                                            <button type="button" class="btn btn-sm bg-warning-subtle text-warning"
+                                                data-bs-toggle="modal" data-bs-target="#editBandwidthModal"
                                                 data-mitra-id="{{ $mitra->id }}"
                                                 data-mitra-name="{{ $mitra->nama_mitra }}"
                                                 data-mitra-brand="{{ $mitra->nama_brand ?? '-' }}"
-                                                data-current-bandwidth="{{ $mitra->bandwidth_mbps }}"
-                                                data-current-formatted="{{ $mitra->bandwidth_formatted }}"
+                                                data-current-bandwidth="{{ $mitra->bandwidth ?? '0 Mbps' }}"
                                                 title="Edit Bandwidth">
                                                 <i class="ti ti-edit fs-5"></i>
                                             </button>
@@ -103,7 +98,9 @@
                                     </td>
                                 </tr>
                             @empty
-
+                                <tr>
+                                    <td colspan="7" class="text-center">Tidak ada data mitra</td>
+                                </tr>
                             @endforelse
                         </tbody>
                         <tfoot>
@@ -124,16 +121,18 @@
     </div>
 
     <!-- Modal TAMBAH Bandwidth -->
-    <div class="modal fade" id="addBandwidthModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="addBandwidthModal" tabindex="-1" aria-labelledby="addBandwidthModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="addBandwidthForm" method="POST">
                     @csrf
                     <div class="modal-header bg-success">
-                        <h5 class="modal-title text-white">
+                        <h5 class="modal-title text-white" id="addBandwidthModalLabel">
                             <i class="ti ti-plus me-2"></i>Tambah Bandwidth
                         </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -154,22 +153,18 @@
                                     Tambah Bandwidth <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
-                                    <input type="number"
-                                        class="form-control"
-                                        id="addBandwidthValue"
-                                        name="bandwidth_value"
-                                        min="1"
-                                        step="0.1"
-                                        placeholder="Contoh: 10"
-                                        required>
-                                    <select class="form-select" style="max-width: 100px;" id="addBandwidthUnit" name="bandwidth_unit" required>
+                                    <input type="number" class="form-control" id="addBandwidthValue"
+                                        name="bandwidth_value" min="0.01" step="0.01"
+                                        placeholder="Contoh: 10 atau 1.5" required>
+                                    <select class="form-select" style="max-width: 120px;" id="addBandwidthUnit"
+                                        name="bandwidth_unit" required>
                                         <option value="Mbps" selected>Mbps</option>
                                         <option value="Gbps">Gbps</option>
                                     </select>
                                 </div>
                                 <small class="text-muted">
                                     <i class="ti ti-info-circle"></i>
-                                    Bandwidth akan <strong>ditambahkan</strong> ke bandwidth saat ini
+                                    Bandwidth yang dimasukkan akan <strong>ditambahkan</strong> ke bandwidth saat ini
                                 </small>
                             </div>
                         </div>
@@ -198,16 +193,18 @@
     </div>
 
     <!-- Modal EDIT Bandwidth -->
-    <div class="modal fade" id="editBandwidthModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editBandwidthModal" tabindex="-1" aria-labelledby="editBandwidthModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="editBandwidthForm" method="POST">
                     @csrf
                     <div class="modal-header bg-warning">
-                        <h5 class="modal-title text-white">
+                        <h5 class="modal-title text-white" id="editBandwidthModalLabel">
                             <i class="ti ti-edit me-2"></i>Edit Bandwidth
                         </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -221,29 +218,26 @@
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="form-label fw-semibold">Bandwidth Saat Ini</label>
-                                <input type="text" class="form-control bg-light fw-bold text-primary" id="editCurrentBandwidth" readonly>
+                                <input type="text" class="form-control bg-light fw-bold text-primary"
+                                    id="editCurrentBandwidth" readonly>
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="editBandwidthValue" class="form-label fw-semibold">
                                     Bandwidth Baru <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
-                                    <input type="number"
-                                        class="form-control"
-                                        id="editBandwidthValue"
-                                        name="bandwidth_value"
-                                        min="0"
-                                        step="0.1"
-                                        placeholder="Contoh: 50"
-                                        required>
-                                    <select class="form-select" style="max-width: 100px;" id="editBandwidthUnit" name="bandwidth_unit" required>
+                                    <input type="number" class="form-control" id="editBandwidthValue"
+                                        name="bandwidth_value" min="0" step="0.01"
+                                        placeholder="Contoh: 50 atau 2.5" required>
+                                    <select class="form-select" style="max-width: 120px;" id="editBandwidthUnit"
+                                        name="bandwidth_unit" required>
                                         <option value="Mbps">Mbps</option>
                                         <option value="Gbps">Gbps</option>
                                     </select>
                                 </div>
                                 <small class="text-muted">
                                     <i class="ti ti-info-circle"></i>
-                                    Bandwidth saat ini akan <strong>diganti</strong> dengan nilai baru
+                                    Bandwidth saat ini akan <strong>diganti</strong> dengan nilai baru yang dimasukkan
                                 </small>
                             </div>
                         </div>
@@ -253,8 +247,9 @@
                                 <i class="ti ti-alert-triangle fs-6 me-2 mt-1"></i>
                                 <div>
                                     <strong>Perhatian!</strong><br>
-                                    <small>Bandwidth akan diubah dari <span id="editOldBandwidth" class="fw-bold">0 Mbps</span>
-                                    menjadi <span id="editNewBandwidthPreview" class="fw-bold">0 Mbps</span></small>
+                                    <small>Bandwidth akan diubah dari <span id="editOldBandwidth" class="fw-bold">0
+                                            Mbps</span>
+                                        menjadi <span id="editNewBandwidthPreview" class="fw-bold">0 Mbps</span></small>
                                 </div>
                             </div>
                         </div>
@@ -274,122 +269,130 @@
 @endsection
 
 @push('scripts')
-<script>
-    // Helper function untuk format bandwidth
-    function formatBandwidth(mbps) {
-        if (mbps >= 1000) {
-            const gbps = mbps / 1000;
-            return gbps % 1 === 0 ? gbps.toFixed(0) + ' Gbps' : gbps.toFixed(1) + ' Gbps';
-        }
-        return mbps + ' Mbps';
-    }
+    <script>
+        // Helper function to parse bandwidth string
+        function parseBandwidth(bandwidthStr) {
+            const match = bandwidthStr.match(/(\d+(?:\.\d+)?)\s*(Mbps|Gbps)/i);
+            if (!match) return {
+                value: 0,
+                unit: 'Mbps',
+                mbps: 0
+            };
 
-    // Helper function untuk convert ke Mbps
-    function convertToMbps(value, unit) {
-        return unit === 'Gbps' ? value * 1000 : value;
-    }
+            const value = parseFloat(match[1]);
+            const unit = match[2];
+            const mbps = unit.toLowerCase() === 'gbps' ? value * 1000 : value;
 
-    // ===== MODAL TAMBAH BANDWIDTH =====
-    const addBandwidthModal = document.getElementById('addBandwidthModal');
-
-    addBandwidthModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-
-        const mitraId = button.getAttribute('data-mitra-id');
-        const mitraName = button.getAttribute('data-mitra-name');
-        const mitraBrand = button.getAttribute('data-mitra-brand');
-        const currentBandwidth = parseFloat(button.getAttribute('data-current-bandwidth')) || 0;
-        const currentFormatted = button.getAttribute('data-current-formatted');
-
-        document.getElementById('addMitraName').value = mitraName;
-        document.getElementById('addMitraBrand').value = mitraBrand;
-        document.getElementById('addCurrentBandwidth').value = currentFormatted;
-
-        const form = document.getElementById('addBandwidthForm');
-        form.action = "{{ url('/manage-bandwidth/add') }}/" + mitraId;
-
-        document.getElementById('addBandwidthValue').value = '';
-        document.getElementById('addBandwidthUnit').value = 'Mbps';
-        document.getElementById('addNewBandwidth').textContent = formatBandwidth(currentBandwidth);
-
-        form.dataset.currentBandwidth = currentBandwidth;
-    });
-
-    // Calculate add bandwidth
-    function updateAddCalculation() {
-        const form = document.getElementById('addBandwidthForm');
-        const currentBandwidth = parseFloat(form.dataset.currentBandwidth) || 0;
-        const addValue = parseFloat(document.getElementById('addBandwidthValue').value) || 0;
-        const addUnit = document.getElementById('addBandwidthUnit').value;
-
-        const addInMbps = convertToMbps(addValue, addUnit);
-        const newBandwidth = currentBandwidth + addInMbps;
-
-        document.getElementById('addNewBandwidth').textContent = formatBandwidth(newBandwidth);
-    }
-
-    document.getElementById('addBandwidthValue').addEventListener('input', updateAddCalculation);
-    document.getElementById('addBandwidthUnit').addEventListener('change', updateAddCalculation);
-
-    addBandwidthModal.addEventListener('shown.bs.modal', function () {
-        document.getElementById('addBandwidthValue').focus();
-    });
-
-    // ===== MODAL EDIT BANDWIDTH =====
-    const editBandwidthModal = document.getElementById('editBandwidthModal');
-
-    editBandwidthModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-
-        const mitraId = button.getAttribute('data-mitra-id');
-        const mitraName = button.getAttribute('data-mitra-name');
-        const mitraBrand = button.getAttribute('data-mitra-brand');
-        const currentBandwidth = parseFloat(button.getAttribute('data-current-bandwidth')) || 0;
-        const currentFormatted = button.getAttribute('data-current-formatted');
-
-        document.getElementById('editMitraName').value = mitraName;
-        document.getElementById('editMitraBrand').value = mitraBrand;
-        document.getElementById('editCurrentBandwidth').value = currentFormatted;
-
-        const form = document.getElementById('editBandwidthForm');
-        form.action = "{{ url('/manage-bandwidth/update') }}/" + mitraId;
-
-        // Auto set nilai berdasarkan bandwidth saat ini
-        if (currentBandwidth >= 1000) {
-            document.getElementById('editBandwidthValue').value = (currentBandwidth / 1000).toFixed(1);
-            document.getElementById('editBandwidthUnit').value = 'Gbps';
-        } else {
-            document.getElementById('editBandwidthValue').value = currentBandwidth;
-            document.getElementById('editBandwidthUnit').value = 'Mbps';
+            return {
+                value,
+                unit,
+                mbps
+            };
         }
 
-        document.getElementById('editOldBandwidth').textContent = currentFormatted;
-        document.getElementById('editNewBandwidthPreview').textContent = currentFormatted;
+        // Helper function to format bandwidth
+        function formatBandwidth(mbps) {
+            if (mbps >= 1000) {
+                const gbps = mbps / 1000;
+                const formatted = gbps % 1 === 0 ? gbps.toFixed(0) : gbps.toFixed(2);
+                return formatted + ' Gbps';
+            }
+            const formatted = mbps % 1 === 0 ? mbps.toFixed(0) : mbps.toFixed(2);
+            return formatted + ' Mbps';
+        }
 
-        form.dataset.currentBandwidth = currentBandwidth;
-        form.dataset.currentFormatted = currentFormatted;
-    });
+        // ===== MODAL TAMBAH BANDWIDTH =====
+        const addBandwidthModal = document.getElementById('addBandwidthModal');
 
-    // Calculate edit bandwidth
-    function updateEditCalculation() {
-        const form = document.getElementById('editBandwidthForm');
-        const currentFormatted = form.dataset.currentFormatted;
-        const editValue = parseFloat(document.getElementById('editBandwidthValue').value) || 0;
-        const editUnit = document.getElementById('editBandwidthUnit').value;
+        addBandwidthModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
 
-        const editInMbps = convertToMbps(editValue, editUnit);
+            const mitraId = button.getAttribute('data-mitra-id');
+            const mitraName = button.getAttribute('data-mitra-name');
+            const mitraBrand = button.getAttribute('data-mitra-brand');
+            const currentBandwidth = button.getAttribute('data-current-bandwidth');
 
-        document.getElementById('editOldBandwidth').textContent = currentFormatted;
-        document.getElementById('editNewBandwidthPreview').textContent = formatBandwidth(editInMbps);
-    }
+            document.getElementById('addMitraName').value = mitraName;
+            document.getElementById('addMitraBrand').value = mitraBrand;
+            document.getElementById('addCurrentBandwidth').value = currentBandwidth;
 
-    document.getElementById('editBandwidthValue').addEventListener('input', updateEditCalculation);
-    document.getElementById('editBandwidthUnit').addEventListener('change', updateEditCalculation);
+            const form = document.getElementById('addBandwidthForm');
+            form.action = "{{ url('/manage-bandwidth/add') }}/" + mitraId;
 
-    editBandwidthModal.addEventListener('shown.bs.modal', function () {
-        const input = document.getElementById('editBandwidthValue');
-        input.focus();
-        input.select();
-    });
-</script>
+            document.getElementById('addBandwidthValue').value = '';
+            document.getElementById('addBandwidthUnit').value = 'Mbps';
+            document.getElementById('addNewBandwidth').textContent = currentBandwidth;
+
+            const parsed = parseBandwidth(currentBandwidth);
+            form.dataset.currentBandwidthMbps = parsed.mbps;
+        });
+
+        function updateAddPreview() {
+            const form = document.getElementById('addBandwidthForm');
+            const currentMbps = parseFloat(form.dataset.currentBandwidthMbps) || 0;
+            const addValue = parseFloat(document.getElementById('addBandwidthValue').value) || 0;
+            const addUnit = document.getElementById('addBandwidthUnit').value;
+
+            const addMbps = addUnit === 'Gbps' ? addValue * 1000 : addValue;
+            const newTotalMbps = currentMbps + addMbps;
+
+            document.getElementById('addNewBandwidth').textContent = formatBandwidth(newTotalMbps);
+        }
+
+        document.getElementById('addBandwidthValue').addEventListener('input', updateAddPreview);
+        document.getElementById('addBandwidthUnit').addEventListener('change', updateAddPreview);
+
+        addBandwidthModal.addEventListener('shown.bs.modal', function() {
+            document.getElementById('addBandwidthValue').focus();
+        });
+
+        // ===== MODAL EDIT BANDWIDTH =====
+        const editBandwidthModal = document.getElementById('editBandwidthModal');
+
+        editBandwidthModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+
+            const mitraId = button.getAttribute('data-mitra-id');
+            const mitraName = button.getAttribute('data-mitra-name');
+            const mitraBrand = button.getAttribute('data-mitra-brand');
+            const currentBandwidth = button.getAttribute('data-current-bandwidth');
+
+            document.getElementById('editMitraName').value = mitraName;
+            document.getElementById('editMitraBrand').value = mitraBrand;
+            document.getElementById('editCurrentBandwidth').value = currentBandwidth;
+
+            const form = document.getElementById('editBandwidthForm');
+            form.action = "{{ url('/manage-bandwidth/update') }}/" + mitraId;
+
+            // Parse current bandwidth
+            const parsed = parseBandwidth(currentBandwidth);
+            document.getElementById('editBandwidthValue').value = parsed.value;
+            document.getElementById('editBandwidthUnit').value = parsed.unit;
+            document.getElementById('editOldBandwidth').textContent = currentBandwidth;
+            document.getElementById('editNewBandwidthPreview').textContent = currentBandwidth;
+
+            form.dataset.currentBandwidth = currentBandwidth;
+        });
+
+        function updateEditPreview() {
+            const form = document.getElementById('editBandwidthForm');
+            const oldBandwidth = form.dataset.currentBandwidth;
+            const newValue = parseFloat(document.getElementById('editBandwidthValue').value) || 0;
+            const newUnit = document.getElementById('editBandwidthUnit').value;
+
+            const formatted = (newValue % 1 === 0 ? newValue.toFixed(0) : newValue.toFixed(2)) + ' ' + newUnit;
+
+            document.getElementById('editOldBandwidth').textContent = oldBandwidth;
+            document.getElementById('editNewBandwidthPreview').textContent = formatted;
+        }
+
+        document.getElementById('editBandwidthValue').addEventListener('input', updateEditPreview);
+        document.getElementById('editBandwidthUnit').addEventListener('change', updateEditPreview);
+
+        editBandwidthModal.addEventListener('shown.bs.modal', function() {
+            const input = document.getElementById('editBandwidthValue');
+            input.focus();
+            input.select();
+        });
+    </script>
 @endpush

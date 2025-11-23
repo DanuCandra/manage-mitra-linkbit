@@ -63,32 +63,33 @@ class Mitra extends Model
         return $this->hasMany(Pelanggan::class);
     }
 
-    public function getBandwidthFormattedAttribute()
+    // Helper untuk mendapatkan bandwidth dalam Mbps
+    public function getBandwidthInMbps()
     {
-        $bandwidth = $this->bandwidth ?? 0;
-
-        if ($bandwidth >= 1000) {
-            // Convert to Gbps
-            $gbps = $bandwidth / 1000;
-
-            // Format: hapus .0 jika bulat, tampilkan 1 desimal jika ada
-            if ($gbps == floor($gbps)) {
-                return number_format($gbps, 0) . ' Gbps';
-            } else {
-                return number_format($gbps, 1) . ' Gbps';
-            }
+        if (empty($this->bandwidth)) {
+            return 0;
         }
 
-        return $bandwidth . ' Mbps';
+        // Format: "100 Mbps" atau "1 Gbps"
+        preg_match('/(\d+(?:\.\d+)?)\s*(Mbps|Gbps)/i', $this->bandwidth, $matches);
+
+        if (empty($matches)) {
+            return 0;
+        }
+
+        $value = floatval($matches[1]);
+        $unit = strtolower($matches[2]);
+
+        if ($unit === 'gbps') {
+            return $value * 1000; // Convert to Mbps
+        }
+
+        return $value;
     }
 
-    /**
-     * Get bandwidth value dalam Mbps (raw value)
-     *
-     * @return int
-     */
-    public function getBandwidthMbpsAttribute()
+    // Helper untuk format bandwidth
+    public function getFormattedBandwidth()
     {
-        return $this->bandwidth ?? 0;
+        return $this->bandwidth ?? '0 Mbps';
     }
 }

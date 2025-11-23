@@ -17,34 +17,43 @@ class AdminMitraController extends Controller
     public function add_bandwidth(Request $request, $id)
     {
         $request->validate([
-            'bandwidth_value' => 'required|numeric|min:1',
+            'bandwidth_value' => 'required|numeric|min:0.01',
             'bandwidth_unit' => 'required|in:Mbps,Gbps',
         ], [
             'bandwidth_value.required' => 'Nilai bandwidth harus diisi',
             'bandwidth_value.numeric' => 'Nilai bandwidth harus berupa angka',
-            'bandwidth_value.min' => 'Nilai bandwidth minimal 1',
+            'bandwidth_value.min' => 'Nilai bandwidth minimal 0.01',
             'bandwidth_unit.required' => 'Unit bandwidth harus dipilih',
         ]);
 
         $mitra = Mitra::findOrFail($id);
 
-        // Convert ke Mbps jika unit adalah Gbps
-        $bandwidthValue = $request->input('bandwidth_value');
-        $bandwidthUnit = $request->input('bandwidth_unit');
+        // Get current bandwidth in Mbps
+        $currentBandwidthMbps = $mitra->getBandwidthInMbps();
 
-        $bandwidthInMbps = $bandwidthUnit === 'Gbps'
-            ? $bandwidthValue * 1000
-            : $bandwidthValue;
+        // Get input bandwidth in Mbps
+        $inputValue = floatval($request->bandwidth_value);
+        $inputUnit = $request->bandwidth_unit;
+        $inputBandwidthMbps = $inputUnit === 'Gbps' ? $inputValue * 1000 : $inputValue;
 
-        // Tambahkan bandwidth baru ke bandwidth yang sudah ada
-        $currentBandwidth = $mitra->bandwidth ?? 0;
-        $mitra->bandwidth = $currentBandwidth + $bandwidthInMbps;
+        // Calculate new total in Mbps
+        $newTotalMbps = $currentBandwidthMbps + $inputBandwidthMbps;
+
+        // Format output: jika >= 1000 Mbps, convert ke Gbps
+        if ($newTotalMbps >= 1000) {
+            $newTotalGbps = $newTotalMbps / 1000;
+            // Bulatkan jika bulat, atau tampilkan desimal jika perlu
+            $formattedValue = $newTotalGbps == floor($newTotalGbps) ? intval($newTotalGbps) : number_format($newTotalGbps, 2);
+            $mitra->bandwidth = $formattedValue . ' Gbps';
+        } else {
+            $formattedValue = $newTotalMbps == floor($newTotalMbps) ? intval($newTotalMbps) : number_format($newTotalMbps, 2);
+            $mitra->bandwidth = $formattedValue . ' Mbps';
+        }
+
         $mitra->save();
 
-        $addedFormatted = $bandwidthValue . ' ' . $bandwidthUnit;
-
         return redirect()->route('manage-bandwidth')
-            ->with('success', 'Berhasil menambahkan ' . $addedFormatted . ' ke ' . $mitra->nama_mitra . '. Total bandwidth sekarang: ' . $mitra->bandwidth_formatted);
+            ->with('success', 'Berhasil menambahkan ' . $inputValue . ' ' . $inputUnit . ' ke ' . $mitra->nama_mitra . '. Total bandwidth sekarang: ' . $mitra->bandwidth);
     }
 
     // Update bandwidth (mengganti bandwidth saat ini)
@@ -62,23 +71,17 @@ class AdminMitraController extends Controller
 
         $mitra = Mitra::findOrFail($id);
 
-        $oldBandwidthFormatted = $mitra->bandwidth_formatted;
+        $oldBandwidth = $mitra->bandwidth ?? '0 Mbps';
 
-        // Convert ke Mbps jika unit adalah Gbps
-        $bandwidthValue = $request->input('bandwidth_value');
-        $bandwidthUnit = $request->input('bandwidth_unit');
+        $newValue = floatval($request->bandwidth_value);
+        $newUnit = $request->bandwidth_unit;
 
-        $bandwidthInMbps = $bandwidthUnit === 'Gbps'
-            ? $bandwidthValue * 1000
-            : $bandwidthValue;
-
-        // Set bandwidth baru (replace)
-        $mitra->bandwidth = $bandwidthInMbps;
+        // Format: hapus .00 jika bulat
+        $formattedValue = $newValue == floor($newValue) ? intval($newValue) : number_format($newValue, 2);
+        $mitra->bandwidth = $formattedValue . ' ' . $newUnit;
         $mitra->save();
 
-        $newFormatted = $bandwidthValue . ' ' . $bandwidthUnit;
-
         return redirect()->route('manage-bandwidth')
-            ->with('success', 'Berhasil mengubah bandwidth ' . $mitra->nama_mitra . ' dari ' . $oldBandwidthFormatted . ' menjadi ' . $newFormatted);
+            ->with('success', 'Berhasil mengubah bandwidth ' . $mitra->nama_mitra . ' dari ' . $oldBandwidth . ' menjadi ' . $mitra->bandwidth);
     }
 }
