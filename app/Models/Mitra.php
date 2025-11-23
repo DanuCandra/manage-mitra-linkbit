@@ -39,7 +39,7 @@ class Mitra extends Model
         'no_nib',
         'no_sertif_standar',
         'tikor',
-        'bandwith',
+        'bandwidth',
         'jml_karyawan',
     ];
 
@@ -61,5 +61,34 @@ class Mitra extends Model
     public function pelanggan()
     {
         return $this->hasMany(Pelanggan::class);
+    }
+
+    public function getBandwidthFormattedAttribute()
+    {
+        $bandwidth = $this->bandwidth ?? 0;
+
+        if ($bandwidth >= 1000) {
+            // Convert to Gbps
+            $gbps = $bandwidth / 1000;
+
+            // Format: hapus .0 jika bulat, tampilkan 1 desimal jika ada
+            if ($gbps == floor($gbps)) {
+                return number_format($gbps, 0) . ' Gbps';
+            } else {
+                return number_format($gbps, 1) . ' Gbps';
+            }
+        }
+
+        return $bandwidth . ' Mbps';
+    }
+
+    /**
+     * Get bandwidth value dalam Mbps (raw value)
+     *
+     * @return int
+     */
+    public function getBandwidthMbpsAttribute()
+    {
+        return $this->bandwidth ?? 0;
     }
 }

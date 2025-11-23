@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminMitraController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -28,6 +29,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/user/delete/{id}', [UsersController::class, 'destroy'])->name('delete-user');
     Route::get('/manage-users/edit/{id}', [UsersController::class, 'edit'])->name('edit-user');
     Route::post('/manage-users/update/{id}', [UsersController::class, 'update'])->name('update-user');
+
+    // tambah bandwidth
+    Route::get('/manage-bandwidth', [AdminMitraController::class, 'manage_bandwidth'])->name('manage-bandwidth');
+    Route::post('/manage-bandwidth/add/{id}', [AdminMitraController::class, 'add_bandwidth'])->name('add-bandwidth');
+    Route::post('/manage-bandwidth/update/{id}', [AdminMitraController::class, 'update_bandwidth'])->name('update-bandwidth');
 });
 
 // khusus mitra
@@ -69,11 +75,14 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::get('/pelanggan/edit/{id}', [PelangganController::class, 'edit'])->name('pelanggan.edit');
     Route::post('/pelanggan/update/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
 
-    // Settingan Mitra
+    // Settingan User
     Route::get('/setting/manage', [MitraController::class, 'manage_setting'])->name('setting.manage');
     Route::post('/setting/update/{id}', [MitraController::class, 'update_setting'])->name('setting.update');
 });
 
 Route::middleware(['auth', 'role:admin,mitra'])->group(function () {
     // Route untuk admin dan mitra di sini
+    // Settingan User
+    Route::get('/setting/manage', [MitraController::class, 'manage_setting'])->name('setting.manage');
+    Route::post('/setting/update/{id}', [MitraController::class, 'update_setting'])->name('setting.update');
 });

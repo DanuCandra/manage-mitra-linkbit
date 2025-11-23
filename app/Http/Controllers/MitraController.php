@@ -44,7 +44,7 @@ class MitraController extends Controller
             'no_nib' => 'nullable|string|max:100',
             'no_sertif_standar' => 'nullable|string|max:100',
             'tikor' => 'nullable|string|max:255',
-            'bandwith' => 'nullable|string|max:100',
+            'bandwidth' => 'nullable|string|max:100',
             'jml_karyawan' => 'nullable|integer',
         ]);
 
@@ -64,7 +64,7 @@ class MitraController extends Controller
             'no_nib' => $validated['no_nib'] ?? null,
             'no_sertif_standar' => $validated['no_sertif_standar'] ?? null,
             'tikor' => $validated['tikor'] ?? null,
-            'bandwith' => $validated['bandwith'] ?? null,
+            'bandwidth' => $validated['bandwidth'] ?? null,
             'jml_karyawan' => $validated['jml_karyawan'] ?? null,
         ]);
 
@@ -95,7 +95,7 @@ class MitraController extends Controller
             'no_nib' => 'nullable|string|max:100',
             'no_sertif_standar' => 'nullable|string|max:100',
             'tikor' => 'nullable|string|max:255',
-            'bandwith' => 'nullable|string|max:100',
+            'bandwidth' => 'nullable|string|max:100',
             'jml_karyawan' => 'nullable|integer',
         ]);
 
@@ -213,4 +213,6 @@ class MitraController extends Controller
             return redirect()->back()->with('success', 'Data personal berhasil diperbarui');
         }
     }
+
+
 }
