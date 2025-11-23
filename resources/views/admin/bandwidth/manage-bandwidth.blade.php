@@ -74,7 +74,7 @@
                                     <td>
                                         <div class="d-flex gap-2">
                                             <!-- Button Tambah Bandwidth -->
-                                            <button type="button" class="btn btn-sm bg-success-subtle text-success"
+                                            <button type="button" class="btn mb-1 bg-success-subtle text-success px-4 fs-4"
                                                 data-bs-toggle="modal" data-bs-target="#addBandwidthModal"
                                                 data-mitra-id="{{ $mitra->id }}"
                                                 data-mitra-name="{{ $mitra->nama_mitra }}"
@@ -85,7 +85,7 @@
                                             </button>
 
                                             <!-- Button Edit Bandwidth -->
-                                            <button type="button" class="btn btn-sm bg-warning-subtle text-warning"
+                                            <button type="button" class="btn mb-1 bg-warning-subtle text-warning px-4 fs-4"
                                                 data-bs-toggle="modal" data-bs-target="#editBandwidthModal"
                                                 data-mitra-id="{{ $mitra->id }}"
                                                 data-mitra-name="{{ $mitra->nama_mitra }}"
