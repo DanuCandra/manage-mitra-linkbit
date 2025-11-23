@@ -79,7 +79,7 @@
                             <div class="form-group row">
                                 <label class="form-label text-end col-md-3">Bandwidth:</label>
                                 <div class="col-md-9">
-                                    <p>{{ $mitra->bandwith }}</p>
+                                    <p>{{ $mitra->bandwidth }}</p>
                                 </div>
                             </div>
                         </div>
