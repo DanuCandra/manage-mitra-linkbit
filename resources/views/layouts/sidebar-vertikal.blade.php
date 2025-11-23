@@ -96,8 +96,12 @@
               <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
                   <div class="hstack gap-3">
                       <div class="john-img">
-                          <img src="{{ url('') }}/assets/images/profile/user-1.jpg" class="rounded-circle"
-                              width="40" height="40" alt="modernize-img" />
+                          <img src="{{ Auth::user()->profile_photo ? asset('storage/profile-foto/' . Auth::user()->profile_photo) : asset('assets/images/profile/user-1.jpg') }}"
+                              alt="Profile Photo"
+                                class="rounded-circle"
+                                width="40"
+                                height="40"
+                                style="object-fit: cover; width: 40px; height: 40px;" />
                       </div>
                       <div class="john-title">
                           <h6 class="mb-0 fs-4 fw-semibold">{{ Auth::user()->name }}</h6>

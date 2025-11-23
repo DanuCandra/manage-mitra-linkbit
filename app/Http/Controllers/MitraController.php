@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Mitra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class MitraController extends Controller
 {
@@ -108,5 +110,107 @@ class MitraController extends Controller
         return view('mitra.profile-mitra.view-profile', [
             'mitra' => $mitra,
         ]);
+    }
+
+    public function manage_setting()
+    {
+        $user = Auth::user();
+        return view('mitra.setting.profile-setting', compact('user'));
+    }
+
+     public function update_setting(Request $request, $id)
+    {
+        // Validasi bahwa user hanya bisa edit profil sendiri
+        if (Auth::id() != $id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk mengubah data ini');
+        }
+
+        $user = User::findOrFail($id);
+
+        // Deteksi jenis form yang disubmit berdasarkan field yang ada
+
+        // 1. FORM UPLOAD/DELETE FOTO PROFIL
+        if ($request->hasFile('profile_photo') || ($request->has('delete_photo') && $request->delete_photo == '1')) {
+
+            // Validasi khusus foto
+            $request->validate([
+                'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:5124',
+            ], [
+                'profile_photo.max' => 'Ukuran foto maksimal 5MB',
+                'profile_photo.image' => 'File harus berupa gambar',
+                'profile_photo.mimes' => 'Format foto harus JPG, JPEG, PNG, atau GIF',
+            ]);
+
+            // Handle profile photo upload
+            if ($request->hasFile('profile_photo')) {
+                // Hapus foto lama jika ada
+                if ($user->profile_photo && Storage::disk('public')->exists('profile-foto/' . $user->profile_photo)) {
+                    Storage::disk('public')->delete('profile-foto/' . $user->profile_photo);
+                }
+
+                // Upload foto baru
+                $file = $request->file('profile_photo');
+                $filename = time() . '_' . $user->id . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('profile-foto', $filename, 'public');
+                $user->profile_photo = $filename;
+            }
+
+            // Handle delete photo
+            if ($request->has('delete_photo') && $request->delete_photo == '1') {
+                if ($user->profile_photo && Storage::disk('public')->exists('profile-foto/' . $user->profile_photo)) {
+                    Storage::disk('public')->delete('profile-foto/' . $user->profile_photo);
+                }
+                $user->profile_photo = null;
+            }
+
+            $user->save();
+            return redirect()->back()->with('success', 'Foto profil berhasil diperbarui');
+        }
+
+        // 2. FORM CHANGE PASSWORD
+        elseif ($request->filled('current_password') || $request->filled('new_password')) {
+
+            // Validasi khusus password
+            $request->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|min:1|confirmed',
+            ], [
+                'new_password.confirmed' => 'Konfirmasi password tidak cocok',
+                'new_password.min' => 'Password minimal 1 karakter',
+                'current_password.required' => 'Password lama harus diisi',
+            ]);
+
+            // Verifikasi password lama
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->back()
+                    ->withErrors(['current_password' => 'Password lama tidak sesuai'])
+                    ->withInput();
+            }
+
+            $user->password = bcrypt($request->new_password);
+            $user->save();
+
+            return redirect()->back()->with('success', 'Password berhasil diubah');
+        }
+
+        // 3. FORM PERSONAL DETAILS
+        else {
+
+            // Validasi data personal
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'no_hp' => 'nullable|string|max:20',
+            ]);
+
+            // Update data basic
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->no_hp = $request->no_hp;
+
+            $user->save();
+
+            return redirect()->back()->with('success', 'Data personal berhasil diperbarui');
+        }
     }
 }

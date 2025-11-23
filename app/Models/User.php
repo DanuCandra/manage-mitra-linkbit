@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Mitra;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,6 +27,7 @@ class User extends Authenticatable
         'no_hp',
         'status',
         'nama_lengkap',
+        'profile_photo',
     ];
 
     /**
@@ -56,4 +58,24 @@ class User extends Authenticatable
         return $this->hasOne(Mitra::class);
     }
 
+    // Accessor untuk mendapatkan URL foto profil
+    public function getProfilePhotoUrlAttribute()
+    {
+        if ($this->profile_photo && Storage::disk('public')->exists('profile-foto/' . $this->profile_photo)) {
+            return asset('storage/profile-foto/' . $this->profile_photo);
+        }
+        return asset('assets/images/profile/user-1.jpg');
+    }
+
+    // Event untuk menghapus foto saat user dihapus
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            if ($user->profile_photo && Storage::disk('public')->exists('profile-foto/' . $user->profile_photo)) {
+                Storage::disk('public')->delete('profile-foto/' . $user->profile_photo);
+            }
+        });
+    }
 }

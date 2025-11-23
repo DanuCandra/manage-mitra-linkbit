@@ -68,6 +68,10 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
     Route::delete('/pelanggan/delete/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
     Route::get('/pelanggan/edit/{id}', [PelangganController::class, 'edit'])->name('pelanggan.edit');
     Route::post('/pelanggan/update/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
+
+    // Settingan Mitra
+    Route::get('/setting/manage', [MitraController::class, 'manage_setting'])->name('setting.manage');
+    Route::post('/setting/update/{id}', [MitraController::class, 'update_setting'])->name('setting.update');
 });
 
 Route::middleware(['auth', 'role:admin,mitra'])->group(function () {
