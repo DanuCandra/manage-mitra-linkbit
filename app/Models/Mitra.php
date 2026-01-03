@@ -92,4 +92,42 @@ class Mitra extends Model
     {
         return $this->bandwidth ?? '0 Mbps';
     }
+
+    public function tagihan()
+    {
+        return $this->hasMany(Tagihan::class, 'mitra_id');
+    }
+
+    // Tagihan yang belum lunas
+    public function tagihanAktif()
+    {
+        return $this->hasMany(Tagihan::class, 'mitra_id')
+            ->whereIn('status_pembayaran', ['belum_bayar', 'cicilan', 'terlambat']);
+    }
+
+    // Total tagihan yang harus dibayar
+    public function getTotalTagihanAttribute()
+    {
+        return $this->tagihanAktif()->sum('sisa_tagihan');
+    }
+
+    // ✅ TAMBAHKAN ACCESSOR INI (yang hilang)
+    public function getTotalDibayarFormatAttribute()
+    {
+        $totalDibayar = $this->tagihan()->sum('total_dibayar');
+        return 'Rp ' . number_format($totalDibayar, 0, ',', '.');
+    }
+
+    // ✅ Format total tagihan dengan Rupiah
+    public function getTotalTagihanFormatAttribute()
+    {
+        return 'Rp ' . number_format($this->total_tagihan, 0, ',', '.');
+    }
+
+    // ✅ Format sisa tagihan dengan Rupiah
+    public function getSisaTagihanFormatAttribute()
+    {
+        $sisaTagihan = $this->tagihanAktif()->sum('sisa_tagihan');
+        return 'Rp ' . number_format($sisaTagihan, 0, ',', '.');
+    }
 }

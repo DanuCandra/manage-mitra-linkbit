@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminMitraController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -8,7 +7,14 @@ use App\Http\Controllers\MitraController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\AdminMitraController;
+use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\AccountBankController;
+use App\Http\Controllers\MitraTagihanController;
+use App\Http\Controllers\MitraPembayaranController;
 
 // PER LOGINAN GAYS WKWK
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -34,7 +40,34 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/manage-bandwidth', [AdminMitraController::class, 'manage_bandwidth'])->name('manage-bandwidth');
     Route::post('/manage-bandwidth/add/{id}', [AdminMitraController::class, 'add_bandwidth'])->name('add-bandwidth');
     Route::post('/manage-bandwidth/update/{id}', [AdminMitraController::class, 'update_bandwidth'])->name('update-bandwidth');
+
+    // Account Bank
+    Route::get('admin/account-bank', [AccountBankController::class, 'index']);
+    Route::get('admin/account-bank/create', [AccountBankController::class, 'create']);
+    Route::post('admin/account-bank/store', [AccountBankController::class, 'store']);
+    Route::get('admin/account-bank/edit/{id}', [AccountBankController::class, 'edit']);
+    Route::post('admin/account-bank/update/{id}', [AccountBankController::class, 'update']);
+    Route::delete('admin/account-bank/delete/{id}', [AccountBankController::class, 'destroy']);
+
+    // Tagihan
+    Route::get('admin/tagihan', [TagihanController::class, 'index']);
+    Route::get('admin/tagihan/create', [TagihanController::class, 'create']);
+    Route::post('admin/tagihan/store', [TagihanController::class, 'store']);
+    Route::get('admin/tagihan/detail/{id}', [TagihanController::class, 'show']);
+    Route::get('admin/tagihan/edit/{id}', [TagihanController::class, 'edit']);
+    Route::post('admin/tagihan/update/{id}', [TagihanController::class, 'update']);
+
+    // Verifikasi Pembayaran
+    Route::get('admin/pembayaran', [PembayaranController::class, 'index']);
+    Route::get('admin/pembayaran/detail/{id}', [PembayaranController::class, 'show']);
+    Route::post('admin/pembayaran/verifikasi/{id}', [PembayaranController::class, 'verifikasi']);
+    Route::post('admin/pembayaran/tolak/{id}', [PembayaranController::class, 'tolak']);
+
+    // Laporan Keuangan
+    Route::get('admin/laporan-keuangan', [LaporanController::class, 'index']);
+    Route::get('admin/laporan-keuangan/export', [LaporanController::class, 'export']);
 });
+
 
 // khusus mitra
 Route::middleware(['auth', 'role:mitra'])->group(function () {
@@ -78,6 +111,19 @@ Route::middleware(['auth', 'role:mitra'])->group(function () {
     // Settingan User
     Route::get('/setting/manage', [MitraController::class, 'manage_setting'])->name('setting.manage');
     Route::post('/setting/update/{id}', [MitraController::class, 'update_setting'])->name('setting.update');
+
+    // Tagihan
+    Route::get('/mitra/tagihan', [MitraTagihanController::class, 'index']);
+    Route::get('/mitra/tagihan/detail/{id}', [MitraTagihanController::class, 'show']);
+
+    // Pembayaran
+    Route::get('/mitra/pembayaran', [MitraPembayaranController::class, 'index'])->name('mitra.pembayaran.index');
+    Route::get('/mitra/pembayaran/create/{tagihan_id}', [MitraPembayaranController::class, 'create'])->name('mitra.pembayaran.create');
+    Route::post('/mitra/pembayaran/store', [MitraPembayaranController::class, 'store'])->name('mitra.pembayaran.store');
+
+    // Riwayat Pembayaran
+    Route::get('/mitra/riwayat-pembayaran', [MitraPembayaranController::class, 'riwayat'])->name('mitra.riwayat-pembayaran');
+    Route::get('/mitra/riwayat-pembayaran/detail/{id}', [MitraPembayaranController::class, 'detailPembayaran'])->name('mitra.riwayat-pembayaran.detail');
 });
 
 Route::middleware(['auth', 'role:admin,mitra'])->group(function () {

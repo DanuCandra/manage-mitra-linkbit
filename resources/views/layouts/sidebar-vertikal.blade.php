@@ -29,7 +29,11 @@
                       <!-- ---------------------------------- -->
                       <!-- Dashboard -->
                       <!-- ---------------------------------- -->
+                      {{-- ============================================ --}}
+                      {{-- MENU UNTUK ADMIN --}}
+                      {{-- ============================================ --}}
                       @if (Auth::check() && Auth::user()->role === 'admin')
+                          {{-- Dashboard --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/admin-dashboard') }}"
                                   class="sidebar-link waves-effect {{ Request::is('admin-dashboard') ? 'active' : '' }}">
@@ -38,6 +42,7 @@
                               </a>
                           </li>
 
+                          {{-- Manage Users --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/manage-users') }}"
                                   class="sidebar-link waves-effect {{ Request::is('manage-users*') ? 'active' : '' }}">
@@ -45,6 +50,8 @@
                                   <span class="hide-menu">Manage Users</span>
                               </a>
                           </li>
+
+                          {{-- Bandwidth Management --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/manage-bandwidth') }}"
                                   class="sidebar-link waves-effect {{ Request::is('manage-bandwidth*') ? 'active' : '' }}">
@@ -52,10 +59,61 @@
                                   <span class="hide-menu">Bandwidth Management</span>
                               </a>
                           </li>
+
+                          {{-- MENU KEUANGAN & PEMBAYARAN --}}
+                          <li class="nav-small-cap">
+                              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                              <span class="hide-menu">Keuangan</span>
+                          </li>
+
+                          {{-- Account Bank --}}
+                          <li class="sidebar-item">
+                              <a href="{{ url('/admin/account-bank') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('admin/account-bank*') ? 'active' : '' }}">
+                                  <span><i class="ti ti-building-bank"></i></span>
+                                  <span class="hide-menu">Account Bank</span>
+                              </a>
+                          </li>
+
+                          {{-- Tagihan --}}
+                          <li class="sidebar-item">
+                              <a href="{{ url('/admin/tagihan') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('admin/tagihan*') ? 'active' : '' }}">
+                                  <span><i class="ti ti-file-invoice"></i></span>
+                                  <span class="hide-menu">Kelola Tagihan</span>
+                              </a>
+                          </li>
+
+                          {{-- Verifikasi Pembayaran --}}
+                          <li class="sidebar-item">
+                              <a href="{{ url('/admin/pembayaran') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('admin/pembayaran*') ? 'active' : '' }}">
+                                  <span><i class="ti ti-receipt"></i></span>
+                                  <span class="hide-menu">Verifikasi Pembayaran</span>
+                                  @php
+                                      $pendingCount = \App\Models\Pembayaran::pending()->count();
+                                  @endphp
+                                  @if ($pendingCount > 0)
+                                      <span class="badge bg-danger rounded-pill ms-auto">{{ $pendingCount }}</span>
+                                  @endif
+                              </a>
+                          </li>
+
+                          {{-- Laporan Keuangan --}}
+                          <li class="sidebar-item">
+                              <a href="{{ url('/admin/laporan-keuangan') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('admin/laporan-keuangan*') ? 'active' : '' }}">
+                                  <span><i class="ti ti-report-money"></i></span>
+                                  <span class="hide-menu">Laporan Keuangan</span>
+                              </a>
+                          </li>
                       @endif
 
-
+                      {{-- ============================================ --}}
+                      {{-- MENU UNTUK MITRA --}}
+                      {{-- ============================================ --}}
                       @if (Auth::check() && Auth::user()->role === 'mitra')
+                          {{-- Dashboard --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/mitra-dashboard') }}"
                                   class="sidebar-link waves-effect {{ Request::is('mitra-dashboard') ? 'active' : '' }}">
@@ -63,6 +121,14 @@
                                   <span class="hide-menu">Dashboard</span>
                               </a>
                           </li>
+
+                          {{-- MENU DATA MITRA --}}
+                          <li class="nav-small-cap">
+                              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                              <span class="hide-menu">Data Mitra</span>
+                          </li>
+
+                          {{-- Profil Mitra --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/profile/add-profile') }}"
                                   class="sidebar-link waves-effect {{ Request::is('profile/*') ? 'active' : '' }}">
@@ -70,6 +136,8 @@
                                   <span class="hide-menu">Profil Mitra</span>
                               </a>
                           </li>
+
+                          {{-- Dokumen --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/dokumen/manage-dokumen') }}"
                                   class="sidebar-link waves-effect {{ Request::is('dokumen/*') ? 'active' : '' }}">
@@ -77,6 +145,14 @@
                                   <span class="hide-menu">Dokumen</span>
                               </a>
                           </li>
+
+                          {{-- MENU PRODUK & PELANGGAN --}}
+                          <li class="nav-small-cap">
+                              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                              <span class="hide-menu">Produk & Pelanggan</span>
+                          </li>
+
+                          {{-- Produk --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/produk/manage-produk') }}"
                                   class="sidebar-link waves-effect {{ Request::is('produk/*') ? 'active' : '' }}">
@@ -85,11 +161,52 @@
                               </a>
                           </li>
 
+                          {{-- Pelanggan --}}
                           <li class="sidebar-item">
                               <a href="{{ url('/pelanggan/manage') }}"
                                   class="sidebar-link waves-effect {{ Request::is('pelanggan/*') ? 'active' : '' }}">
                                   <i class="ti ti-users"></i>
                                   <span class="hide-menu">Pelanggan</span>
+                              </a>
+                          </li>
+
+                          {{-- MENU PEMBAYARAN --}}
+                          <li class="nav-small-cap">
+                              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                              <span class="hide-menu">Pembayaran</span>
+                          </li>
+
+                          {{-- Tagihan Saya --}}
+                          <li class="sidebar-item">
+                              <a href="{{ url('/mitra/tagihan') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('mitra/tagihan*') ? 'active' : '' }}">
+                                  <i class="ti ti-file-invoice"></i>
+                                  <span class="hide-menu">Tagihan Saya</span>
+                                  @php
+                                      $mitra = Auth::user()->mitra;
+                                      $unpaidCount = $mitra ? $mitra->tagihanAktif()->count() : 0;
+                                  @endphp
+                                  @if ($unpaidCount > 0)
+                                      <span class="badge bg-danger rounded-pill ms-auto">{{ $unpaidCount }}</span>
+                                  @endif
+                              </a>
+                          </li>
+
+                          {{-- Bayar Tagihan --}}
+                          <li class="sidebar-item">
+                              <a href="{{ url('/mitra/pembayaran') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('mitra/pembayaran*') ? 'active' : '' }}">
+                                  <i class="ti ti-credit-card"></i>
+                                  <span class="hide-menu">Bayar Tagihan</span>
+                              </a>
+                          </li>
+
+                          {{-- Riwayat Pembayaran --}}
+                          <li class="sidebar-item">
+                              <a href="{{ url('/mitra/riwayat-pembayaran') }}"
+                                  class="sidebar-link waves-effect {{ Request::is('mitra/riwayat-pembayaran*') ? 'active' : '' }}">
+                                  <i class="ti ti-history"></i>
+                                  <span class="hide-menu">Riwayat Pembayaran</span>
                               </a>
                           </li>
                       @endif
