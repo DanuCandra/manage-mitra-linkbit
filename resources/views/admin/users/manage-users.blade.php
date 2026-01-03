@@ -44,6 +44,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>No HP</th>
+                                <th>Alamat</th>
                                 <th>Status</th>
                                 <th>Role</th>
                                 <th>Action</th>
@@ -56,6 +57,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->no_hp }}</td>
+                                    <td>{{ $user->alamat }}</td>
                                     <td>{{ $user->status }}</td>
                                     <td>{{ $user->role }}</td>
                                     <td>
@@ -146,6 +148,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>No HP</th>
+                                <th>Alamat</th>
                                 <th>Status</th>
                                 <th>Role</th>
                                 <th>Action</th>

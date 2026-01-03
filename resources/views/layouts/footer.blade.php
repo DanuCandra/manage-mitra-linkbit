@@ -8,6 +8,7 @@
 <!-- Tema dan Menu -->
 <script src="{{ url('') }}/assets/js/theme/app.init.js"></script>
 <script src="{{ url('') }}/assets/js/theme/theme.js"></script>
+
 <script src="{{ url('') }}/assets/js/theme/app.min.js"></script>
 <script src="{{ url('') }}/assets/js/theme/sidebarmenu.js"></script>
 

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'status',
         'nama_lengkap',
         'profile_photo',
+        'alamat',
     ];
 
     /**

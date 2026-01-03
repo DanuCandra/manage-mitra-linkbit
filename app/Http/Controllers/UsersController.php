@@ -24,12 +24,10 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
-            'no_hp' => 'required',
-            'role' => 'required',
-            'status' => 'required',
+            'alamat' => 'nullable|string',
         ]);
 
         User::create([
@@ -37,9 +35,11 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'no_hp' => $request->no_hp,
-            'role' => $request->role,
-            'status' => $request->status,
+            'alamat' => $request->alamat,
+            'status' => $request->status ?? 'aktif',
+            'role' => $request->role ?? 'mitra',
         ]);
+
         return redirect('manage-users')->with('success', 'User berhasil ditambahkan!');
     }
 
@@ -69,6 +69,7 @@ class UsersController extends Controller
             'role' => 'required|in:admin,mitra',
             'status' => 'required|in:aktif,tidak-aktif',
             'no_hp' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string|max:255',
         ]);
 
         $user->name = $validated['name'];
@@ -76,6 +77,7 @@ class UsersController extends Controller
         $user->role = $validated['role'];
         $user->status = $validated['status'];
         $user->no_hp = $validated['no_hp'] ?? $user->no_hp;
+        $user->alamat = $validated['alamat'] ?? $user->alamat;
 
         if (!empty($validated['password'])) {
             $user->password = bcrypt($validated['password']);

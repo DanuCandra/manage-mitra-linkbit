@@ -11,8 +11,8 @@
                             <li class="breadcrumb-item">
                                 <a class="text-muted text-decoration-none" href="{{ url('/') }}">Home</a>
                             </li>
-                            <li class=" breadcrumb-item"> <a class="text-muted text-decoration-none"
-                                    href="{{ url('/manage-users') }}"> Manage User</a>
+                            <li class="breadcrumb-item">
+                                <a class="text-muted text-decoration-none" href="{{ url('/manage-users') }}">Manage User</a>
                             </li>
                             <li class="breadcrumb-item" aria-current="page">Add User</li>
                         </ol>
@@ -20,7 +20,8 @@
                 </div>
                 <div class="col-3">
                     <div class="text-center mb-n5">
-                        <img src="../assets/images/breadcrumb/ChatBc.png" alt="modernize-img" class="img-fluid mb-n4" />
+                        <img src="{{ url('') }}/assets/images/breadcrumb/ChatBc.png" alt="modernize-img"
+                            class="img-fluid mb-n4" />
                     </div>
                 </div>
             </div>
@@ -37,75 +38,89 @@
                 <div>
                     <div class="card-body">
                         <h4 class="card-title">Informasi User</h4>
+
+                        {{-- Nama & Email --}}
                         <div class="row pt-3">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Nama Lengkap</label>
-                                    <input type="text" value="{{ old('name') }}" name="name" class="form-control"
-                                        placeholder="Nama Lengkap" required />
-
+                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                                        placeholder="Nama Lengkap" required>
                                 </div>
                             </div>
-                            <!--/span-->
+
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
-                                    <input type="email" id="lastName" name="email" class="form-control"
-                                        value="{{ old('email') }}" placeholder="Email" required />
+                                    <input type="email" name="email" value="{{ old('email') }}" class="form-control"
+                                        placeholder="Email" required>
                                 </div>
                             </div>
-                            <!--/span-->
                         </div>
-                        <!--/row-->
+
+                        {{-- No HP & Password --}}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">No HP</label>
                                     <input type="text" name="no_hp" value="{{ old('no_hp') }}" class="form-control"
-                                        placeholder="No HP" />
-
+                                        placeholder="No HP">
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Password</label>
-                                    <input type="password" id="password" name="password" class="form-control"
-                                        placeholder="Password" required />
-
+                                    <input type="password" name="password" class="form-control" placeholder="Password"
+                                        required>
                                 </div>
                             </div>
-                            <!--/span-->
-
-                            <!--/span-->
                         </div>
-                        <!--/row-->
+
+                        {{-- Alamat --}}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Alamat</label>
+                                    <textarea name="alamat" class="form-control" rows="3" placeholder="Alamat lengkap">{{ old('alamat') }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Status & Role --}}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Status User</label>
                                     <select class="form-select" name="status">
                                         <option value="">Pilih Status</option>
-                                        <option value="aktif" {{ old('status') == 'aktif' ? 'selected' : '' }}>Aktif
+                                        <option value="aktif" {{ old('status') == 'aktif' ? 'selected' : '' }}>
+                                            Aktif
                                         </option>
-                                        <option value="tidak-gaktif" {{ old('status') == 'tidak-aktif' ? 'selected' : '' }}>Tidak
-                                            Aktif</option>
+                                        <option value="tidak-aktif" {{ old('status') == 'tidak-aktif' ? 'selected' : '' }}>
+                                            Tidak Aktif
+                                        </option>
                                     </select>
-
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Role User</label>
-                                    <select class="form-select" name="role" data-placeholder="Pilih Role" tabindex="1">
-                                        <option value="mitra">Pilih Role</option>
-                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                        <option value="mitra" {{ old('role') == 'mitra' ? 'selected' : '' }}>Mitra</option>
+                                    <select class="form-select" name="role">
+                                        <option value="">Pilih Role</option>
+                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>
+                                            Admin
+                                        </option>
+                                        <option value="mitra" {{ old('role') == 'mitra' ? 'selected' : '' }}>
+                                            Mitra
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                     <hr />
 
                     <div class="form-actions">
